@@ -5,5 +5,5 @@ package com.udacity.desromj.breakout.entity;
  */
 public class Score
 {
-    
+
 }
