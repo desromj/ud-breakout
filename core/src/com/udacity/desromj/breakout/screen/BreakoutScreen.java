@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.udacity.desromj.breakout.entity.Ball;
 import com.udacity.desromj.breakout.entity.Platform;
 import com.udacity.desromj.breakout.util.Constants;
+import com.udacity.desromj.breakout.util.Difficulty;
 
 /**
  * Created by Quiv on 2015-12-27.
@@ -24,14 +25,16 @@ public class BreakoutScreen extends ScreenAdapter
     // Gameplay Objects which need to be updated and rendered
     Platform platform;
     Ball ball;
+    Difficulty difficulty;
 
     /**
      * Keep a reference to the parent game so we can switch screens
      * @param game
      */
-    public BreakoutScreen(Game game)
+    public BreakoutScreen(Game game, Difficulty difficulty)
     {
         this.game = game;
+        this.difficulty = difficulty;
     }
 
     @Override
