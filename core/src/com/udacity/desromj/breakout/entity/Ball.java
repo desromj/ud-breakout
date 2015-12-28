@@ -19,6 +19,7 @@ public class Ball extends InputAdapter
     Vector2 position, velocity;
     Platform launchPlatform;
     MoveState moveState;
+    public boolean isOffScreen;
 
     Viewport viewport;
 
@@ -34,6 +35,7 @@ public class Ball extends InputAdapter
         moveState = MoveState.HELD;
         position = new Vector2();
         velocity = new Vector2();
+        isOffScreen = false;
     }
 
     public void update(float delta)
@@ -97,6 +99,9 @@ public class Ball extends InputAdapter
             position.y = Constants.WORLD_HEIGHT - Constants.BALL_RADIUS;
             velocity.y = -velocity.y;
         }
+
+        // Check the bottom edge - if the ball is offscreen
+        isOffScreen = (position.y <= 0);
     }
 
     public void render(ShapeRenderer renderer)

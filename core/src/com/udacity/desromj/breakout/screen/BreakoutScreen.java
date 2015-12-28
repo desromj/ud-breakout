@@ -27,6 +27,9 @@ public class BreakoutScreen extends ScreenAdapter
     Ball ball;
     Difficulty difficulty;
 
+    // Other game-specific variables
+    int numLives;
+
     /**
      * Keep a reference to the parent game so we can switch screens
      * @param game
@@ -35,6 +38,7 @@ public class BreakoutScreen extends ScreenAdapter
     {
         this.game = game;
         this.difficulty = difficulty;
+        this.numLives = difficulty.numLives;
     }
 
     @Override
@@ -64,6 +68,8 @@ public class BreakoutScreen extends ScreenAdapter
         platform.update(delta);
         ball.update(delta);
 
+        checkBallIsOnScreen();
+
         // Clear the screen to white - will be drawing a custom rectangle colour blend
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -88,6 +94,23 @@ public class BreakoutScreen extends ScreenAdapter
 
 
         renderer.end();
+    }
+
+    private void checkBallIsOnScreen()
+    {
+        if (ball.isOffScreen)
+        {
+            if (--numLives <= 0) {
+                endGame();
+            } else {
+                ball.init();
+            }
+        }
+    }
+    
+    private void endGame()
+    {
+        // TODO: Show the gameover screen, save high score
     }
 
     @Override
