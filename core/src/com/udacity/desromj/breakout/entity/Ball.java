@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.udacity.desromj.breakout.util.Constants;
 
 /**
@@ -18,9 +19,12 @@ public class Ball extends InputAdapter
     Platform launchPlatform;
     MoveState moveState;
 
-    public Ball(Platform launchPlatform)
+    Viewport viewport;
+
+    public Ball(Platform launchPlatform, Viewport viewport)
     {
         this.launchPlatform = launchPlatform;
+        this.viewport = viewport;
         init();
     }
 
@@ -91,8 +95,15 @@ public class Ball extends InputAdapter
         if (moveState == MoveState.MOVING)
             return true;
 
-        // TODO: allow launching the ball through touch controls
-        return false;
+        // allow launching the ball through touch controls
+        Vector2 touchPos = viewport.unproject(new Vector2(screenX, screenY));
+        Vector2 diff = touchPos.sub(position);
+
+        // Y value must ve positive to respond to the event
+        if (diff.y > 0)
+            launch(diff);
+
+        return true;
     }
 
     public enum MoveState

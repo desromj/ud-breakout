@@ -6,7 +6,6 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.udacity.desromj.breakout.entity.Ball;
 import com.udacity.desromj.breakout.entity.Platform;
@@ -33,8 +32,6 @@ public class BreakoutScreen extends ScreenAdapter
     public BreakoutScreen(Game game)
     {
         this.game = game;
-        platform = new Platform();
-        ball = new Ball(platform);
     }
 
     @Override
@@ -42,6 +39,8 @@ public class BreakoutScreen extends ScreenAdapter
     {
         renderer = new ShapeRenderer();
         viewport = new ExtendViewport(Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
+        platform = new Platform();
+        ball = new Ball(platform, viewport);
 
         Gdx.input.setInputProcessor(ball);
     }

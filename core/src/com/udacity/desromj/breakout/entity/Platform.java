@@ -36,12 +36,12 @@ public class Platform
             lastDirection = DirectionMoved.RIGHT;
         }
 
-        // TODO: Accelerometer Controls need to be tested
+        // Accelerometer Controls need to be tested
         boolean hasTiltControl = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
 
         if (hasTiltControl)
         {
-            float xAxis = -Gdx.input.getAccelerometerY();
+            float xAxis = Gdx.input.getAccelerometerY();
             position.x += xAxis * Constants.PLATFORM_MAX_SPEED * delta;
         }
 
