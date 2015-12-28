@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.udacity.desromj.breakout.util.Constants;
+import com.udacity.desromj.breakout.util.Difficulty;
 
 /**
  * Created by Quiv on 2015-12-27.
@@ -19,14 +20,17 @@ public class Ball extends InputAdapter
     Vector2 position, velocity;
     Platform launchPlatform;
     MoveState moveState;
+    Difficulty difficulty;
+
     public boolean isOffScreen;
 
     Viewport viewport;
 
-    public Ball(Platform launchPlatform, Viewport viewport)
+    public Ball(Platform launchPlatform, Viewport viewport, Difficulty difficulty)
     {
         this.launchPlatform = launchPlatform;
         this.viewport = viewport;
+        this.difficulty = difficulty;
         init();
     }
 
@@ -113,8 +117,8 @@ public class Ball extends InputAdapter
     public void launch(Vector2 target)
     {
         moveState = MoveState.MOVING;
-        velocity.x = target.nor().x * Constants.BALL_SPEED;
-        velocity.y = target.nor().y * Constants.BALL_SPEED;
+        velocity.x = target.nor().x * Constants.BALL_SPEED * difficulty.ballSpeedMultiplier;
+        velocity.y = target.nor().y * Constants.BALL_SPEED * difficulty.ballSpeedMultiplier;
     }
 
     @Override

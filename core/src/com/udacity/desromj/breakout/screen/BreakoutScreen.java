@@ -47,7 +47,7 @@ public class BreakoutScreen extends ScreenAdapter
         renderer = new ShapeRenderer();
         viewport = new ExtendViewport(Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
         platform = new Platform();
-        ball = new Ball(platform, viewport);
+        ball = new Ball(platform, viewport, difficulty);
 
         Gdx.input.setInputProcessor(ball);
     }
@@ -107,7 +107,7 @@ public class BreakoutScreen extends ScreenAdapter
             }
         }
     }
-    
+
     private void endGame()
     {
         // TODO: Show the gameover screen, save high score
