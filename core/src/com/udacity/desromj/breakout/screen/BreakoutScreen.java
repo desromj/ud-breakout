@@ -5,9 +5,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.udacity.desromj.breakout.entity.Ball;
+import com.udacity.desromj.breakout.entity.Block;
 import com.udacity.desromj.breakout.entity.Platform;
 import com.udacity.desromj.breakout.util.Constants;
 import com.udacity.desromj.breakout.util.Difficulty;
@@ -26,6 +28,9 @@ public class BreakoutScreen extends ScreenAdapter
     Platform platform;
     Ball ball;
     Difficulty difficulty;
+
+    // Single block for testing physics out
+    Block block;
 
     // Other game-specific variables
     int numLives;
@@ -48,6 +53,8 @@ public class BreakoutScreen extends ScreenAdapter
         viewport = new ExtendViewport(Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
         platform = new Platform();
         ball = new Ball(platform, viewport, difficulty);
+
+        block = new Block(new Vector2(Constants.WORLD_WIDTH / 2, Constants.WORLD_HEIGHT / 1.5f));
 
         Gdx.input.setInputProcessor(ball);
     }
@@ -92,6 +99,7 @@ public class BreakoutScreen extends ScreenAdapter
         platform.render(renderer);
         ball.render(renderer);
 
+        block.render(renderer);
 
         renderer.end();
     }
