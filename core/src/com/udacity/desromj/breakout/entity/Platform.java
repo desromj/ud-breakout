@@ -40,6 +40,12 @@ public class Platform
             float xAxis = -Gdx.input.getAccelerometerY();
             position.x += xAxis * Constants.PLATFORM_MAX_SPEED * delta;
         }
+
+        // Constrain the platform to the play area
+        if (position.x - Constants.PLATFORM_WIDTH / 2 <= 0.0f)
+            position.x = Constants.PLATFORM_WIDTH / 2;
+        if (position.x + Constants.PLATFORM_WIDTH / 2 >= Constants.WORLD_WIDTH)
+            position.x = Constants.WORLD_WIDTH - Constants.PLATFORM_WIDTH / 2;
     }
 
     public void render(ShapeRenderer renderer)
