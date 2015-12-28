@@ -42,6 +42,8 @@ public class BreakoutScreen extends ScreenAdapter
     {
         renderer = new ShapeRenderer();
         viewport = new ExtendViewport(Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
+
+        Gdx.input.setInputProcessor(ball);
     }
 
     @Override

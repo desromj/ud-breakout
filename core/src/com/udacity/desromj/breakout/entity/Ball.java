@@ -1,5 +1,8 @@
 package com.udacity.desromj.breakout.entity;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.udacity.desromj.breakout.util.Constants;
@@ -7,8 +10,10 @@ import com.udacity.desromj.breakout.util.Constants;
 /**
  * Created by Quiv on 2015-12-27.
  */
-public class Ball
+public class Ball extends InputAdapter
 {
+    public static final String TAG = Ball.class.getName();
+
     Vector2 position, velocity;
     Platform launchPlatform;
     MoveState moveState;
@@ -55,6 +60,35 @@ public class Ball
     {
         renderer.setColor(Constants.BALL_COLOR);
         renderer.circle(position.x, position.y, Constants.BALL_RADIUS);
+    }
+
+    public void launch(Vector2 target)
+    {
+        moveState = MoveState.MOVING;
+        velocity.x = target.nor().x * Constants.BALL_SPEED;
+        velocity.y = target.nor().y * Constants.BALL_SPEED;
+    }
+
+    @Override
+    public boolean keyDown(int keycode)
+    {
+        if (moveState == MoveState.MOVING)
+            return true;
+
+        if (keycode == Input.Keys.SPACE) {
+            launch(new Vector2(1, 1));
+        }
+        return true;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button)
+    {
+        if (moveState == MoveState.MOVING)
+            return true;
+
+        // TODO: allow launching the ball through touch controls
+        return false;
     }
 
     public enum MoveState
