@@ -6,7 +6,9 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.udacity.desromj.breakout.entity.Platform;
 import com.udacity.desromj.breakout.util.Constants;
 
 /**
@@ -19,6 +21,9 @@ public class BreakoutScreen extends ScreenAdapter
     ShapeRenderer renderer;
     Viewport viewport;
 
+    // Gameplay Objects which need to be updated and rendered
+    Platform platform;
+
     /**
      * Keep a reference to the parent game so we can switch screens
      * @param game
@@ -26,6 +31,7 @@ public class BreakoutScreen extends ScreenAdapter
     public BreakoutScreen(Game game)
     {
         this.game = game;
+        platform = new Platform();
     }
 
     @Override
@@ -38,12 +44,15 @@ public class BreakoutScreen extends ScreenAdapter
     @Override
     public void resize(int width, int height)
     {
-        viewport.update(width, height);
+        viewport.update(width, height, true);
     }
 
     @Override
     public void render(float delta)
     {
+        viewport.apply();
+        renderer.setProjectionMatrix(viewport.getCamera().combined);
+
         // Clear the screen to white - will be drawing a custom rectangle colour blend
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -63,8 +72,8 @@ public class BreakoutScreen extends ScreenAdapter
                 Constants.BACKGROUND_COLOR_TOP);
 
         // TODO: Render evey other game object that requires it
+        platform.render(renderer);
 
-        
 
         renderer.end();
     }
