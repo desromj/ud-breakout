@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.udacity.desromj.breakout.entity.Ball;
 import com.udacity.desromj.breakout.entity.Block;
+import com.udacity.desromj.breakout.entity.Blocks;
 import com.udacity.desromj.breakout.entity.Platform;
 import com.udacity.desromj.breakout.util.Constants;
 import com.udacity.desromj.breakout.util.Difficulty;
@@ -29,9 +30,7 @@ public class BreakoutScreen extends ScreenAdapter
     Platform platform;
     Ball ball;
     Difficulty difficulty;
-
-    // Single block for testing physics out
-    DelayedRemovalArray<Block> blocks;
+    Blocks blocks;
 
     // Other game-specific variables
     int numLives;
@@ -55,16 +54,7 @@ public class BreakoutScreen extends ScreenAdapter
         platform = new Platform();
         ball = new Ball(platform, viewport, difficulty);
 
-        blocks = new DelayedRemovalArray<Block>();
-        blocks.add(new Block(new Vector2(Constants.WORLD_WIDTH / 2, Constants.WORLD_HEIGHT / 1.5f)));
-        blocks.add(new Block(new Vector2(Constants.WORLD_WIDTH / 2 + 1 * Constants.BLOCK_WIDTH, Constants.WORLD_HEIGHT / 1.5f)));
-        blocks.add(new Block(new Vector2(Constants.WORLD_WIDTH / 2 + 2 * Constants.BLOCK_WIDTH, Constants.WORLD_HEIGHT / 1.5f)));
-        blocks.add(new Block(new Vector2(Constants.WORLD_WIDTH / 2 + 3 * Constants.BLOCK_WIDTH, Constants.WORLD_HEIGHT / 1.5f)));
-        blocks.add(new Block(new Vector2(Constants.WORLD_WIDTH / 2 + 4 * Constants.BLOCK_WIDTH, Constants.WORLD_HEIGHT / 1.5f)));
-        blocks.add(new Block(new Vector2(Constants.WORLD_WIDTH / 2 - 1 * Constants.BLOCK_WIDTH, Constants.WORLD_HEIGHT / 1.5f)));
-        blocks.add(new Block(new Vector2(Constants.WORLD_WIDTH / 2 - 2 * Constants.BLOCK_WIDTH, Constants.WORLD_HEIGHT / 1.5f)));
-        blocks.add(new Block(new Vector2(Constants.WORLD_WIDTH / 2 - 3 * Constants.BLOCK_WIDTH, Constants.WORLD_HEIGHT / 1.5f)));
-        blocks.add(new Block(new Vector2(Constants.WORLD_WIDTH / 2 - 4 * Constants.BLOCK_WIDTH, Constants.WORLD_HEIGHT / 1.5f)));
+        blocks = new Blocks(difficulty);
 
         Gdx.input.setInputProcessor(ball);
     }
@@ -109,9 +99,9 @@ public class BreakoutScreen extends ScreenAdapter
         // TODO: Render evey other game object that requires it
         platform.render(renderer);
         ball.render(renderer);
+        blocks.render(renderer);
 
-        for (Block block: blocks)
-            block.render(renderer);
+
 
         renderer.end();
     }
@@ -124,14 +114,12 @@ public class BreakoutScreen extends ScreenAdapter
       */
     private void checkBallCollisionWithBlocks()
     {
-        for (int i = 0; i < blocks.size; i++)
-        {
-            Block block = blocks.get(i);
+        for (int i = 0; i < blocks.blocks.size; i++) {
+            Block block = blocks.blocks.get(i);
 
-            if (ball.isColliding(block))
-            {
+            if (ball.isColliding(block)) {
                 ball.bounceOffBlock(block);
-                blocks.removeIndex(i);
+                blocks.blocks.removeIndex(i);
             }
         }
     }

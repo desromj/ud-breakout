@@ -26,6 +26,7 @@ public class Constants
     public static final float BLOCK_WIDTH = WORLD_WIDTH / BLOCKS_PER_ROW;
     public static final float BLOCK_HEIGHT = 30.0f;
     public static final float BLOCK_BORDER_WIDTH = 2.5f;
+    public static final float BLOCK_MARGIN_FROM_TOP = 60.0f;
 
     // Area within/above the platform within which the ball can be hit (including its redius)
     public static final float BALL_HIT_ALLOWANCE = 0.02f;
