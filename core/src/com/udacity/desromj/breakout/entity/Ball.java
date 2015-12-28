@@ -76,8 +76,12 @@ public class Ball extends InputAdapter
             return true;
 
         if (keycode == Input.Keys.SPACE) {
-            launch(new Vector2(1, 1));
+            launch(
+                    new Vector2(
+                            (launchPlatform.lastDirection == Platform.DirectionMoved.RIGHT) ? 1 : -1,
+                            1));
         }
+
         return true;
     }
 

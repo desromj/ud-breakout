@@ -12,6 +12,7 @@ import com.udacity.desromj.breakout.util.Constants;
 public class Platform
 {
     Vector2 position;
+    DirectionMoved lastDirection;
 
     public Platform()
     {
@@ -21,6 +22,7 @@ public class Platform
     public void init()
     {
         position = new Vector2(Constants.WORLD_WIDTH / 2, Constants.PLATFORM_BOTTOM_MARGIN);
+        lastDirection = DirectionMoved.RIGHT;
     }
 
     public void update(float delta)
@@ -28,8 +30,10 @@ public class Platform
         // Keyboard Controls
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             position.x -= Constants.PLATFORM_MAX_SPEED * delta;
+            lastDirection = DirectionMoved.LEFT;
         } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             position.x += Constants.PLATFORM_MAX_SPEED * delta;
+            lastDirection = DirectionMoved.RIGHT;
         }
 
         // TODO: Accelerometer Controls need to be tested
@@ -58,5 +62,11 @@ public class Platform
                 Constants.PLATFORM_WIDTH,
                 Constants.PLATFORM_HEIGHT
         );
+    }
+
+    public enum DirectionMoved
+    {
+        LEFT,
+        RIGHT;
     }
 }
