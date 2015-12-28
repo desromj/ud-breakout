@@ -53,6 +53,9 @@ public class BreakoutScreen extends ScreenAdapter
         viewport.apply();
         renderer.setProjectionMatrix(viewport.getCamera().combined);
 
+        // Perform entity updates
+        platform.update(delta);
+
         // Clear the screen to white - will be drawing a custom rectangle colour blend
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

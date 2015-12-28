@@ -1,5 +1,7 @@
 package com.udacity.desromj.breakout.entity;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.udacity.desromj.breakout.util.Constants;
@@ -21,13 +23,25 @@ public class Platform
         position = new Vector2(Constants.WORLD_WIDTH / 2, Constants.PLATFORM_BOTTOM_MARGIN);
     }
 
-    // TODO: Check for input and update the platform here
     public void update(float delta)
     {
+        // Keyboard Controls
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            position.x -= Constants.PLATFORM_MAX_SPEED * delta;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            position.x += Constants.PLATFORM_MAX_SPEED * delta;
+        }
 
+        // TODO: Accelerometer Controls need to be tested
+        boolean hasTiltControl = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
+
+        if (hasTiltControl)
+        {
+            float xAxis = -Gdx.input.getAccelerometerY();
+            position.x += xAxis * Constants.PLATFORM_MAX_SPEED * delta;
+        }
     }
 
-    // TODO: Render the platform
     public void render(ShapeRenderer renderer)
     {
         renderer.setColor(Constants.PLATFORM_COLOR);
