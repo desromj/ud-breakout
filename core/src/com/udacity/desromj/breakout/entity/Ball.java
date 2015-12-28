@@ -58,6 +58,26 @@ public class Ball extends InputAdapter
 
                 break;
         }
+
+        // Constrain the ball to the play area and make it bounce, except for the bottom
+
+        // Right edge
+        if (position.x + Constants.BALL_RADIUS >= Constants.WORLD_WIDTH) {
+            position.x = Constants.WORLD_WIDTH - Constants.BALL_RADIUS;
+            velocity.x = -velocity.x;
+        }
+
+        // Left edge
+        if (position.x - Constants.BALL_RADIUS <= 0.0f) {
+            position.x = Constants.BALL_RADIUS;
+            velocity.x = -velocity.x;
+        }
+
+        // Top edge
+        if (position.y + Constants.BALL_RADIUS >= Constants.WORLD_HEIGHT) {
+            position.y = Constants.WORLD_HEIGHT - Constants.BALL_RADIUS;
+            velocity.y = -velocity.y;
+        }
     }
 
     public void render(ShapeRenderer renderer)
