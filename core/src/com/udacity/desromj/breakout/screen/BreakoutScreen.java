@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.udacity.desromj.breakout.entity.Ball;
 import com.udacity.desromj.breakout.entity.Platform;
 import com.udacity.desromj.breakout.util.Constants;
 
@@ -23,6 +24,7 @@ public class BreakoutScreen extends ScreenAdapter
 
     // Gameplay Objects which need to be updated and rendered
     Platform platform;
+    Ball ball;
 
     /**
      * Keep a reference to the parent game so we can switch screens
@@ -32,6 +34,7 @@ public class BreakoutScreen extends ScreenAdapter
     {
         this.game = game;
         platform = new Platform();
+        ball = new Ball(platform);
     }
 
     @Override
@@ -55,6 +58,7 @@ public class BreakoutScreen extends ScreenAdapter
 
         // Perform entity updates
         platform.update(delta);
+        ball.update(delta);
 
         // Clear the screen to white - will be drawing a custom rectangle colour blend
         Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -76,6 +80,7 @@ public class BreakoutScreen extends ScreenAdapter
 
         // TODO: Render evey other game object that requires it
         platform.render(renderer);
+        ball.render(renderer);
 
 
         renderer.end();

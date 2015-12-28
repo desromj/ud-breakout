@@ -17,6 +17,10 @@ public class Constants
     public static final float PLATFORM_MAX_SPEED = 300.0f;
     public static final Color PLATFORM_COLOR = Color.PURPLE;
 
+    public static final float BALL_RADIUS = 8.0f;
+    public static final float BALL_SPEED = 400.0f;
+    public static final Color BALL_COLOR = Color.RED;
+
     /** Platform's height from the bottom of the screen */
     public static final float PLATFORM_BOTTOM_MARGIN = 40.0f;
 
