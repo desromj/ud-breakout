@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.udacity.desromj.breakout.util.Constants;
@@ -60,7 +61,25 @@ public class Ball extends InputAdapter
         }
 
         // Constrain the ball to the play area and make it bounce, except for the bottom
+        constrainToPlayArea();
+        bounceOffPlatform();
+    }
 
+    private void bounceOffPlatform()
+    {
+        /*
+         * If we are inside the hit rectangle of the platform, detect the angle between ball and platform
+         * ONLY IF: The ball is moving, the ball is moving DOWNWARD, and it is within the hit retangle
+         */
+        if (moveState == MoveState.MOVING && velocity.y <= 0 && launchPlatform.hitRect.contains(position))
+        {
+            Vector2 angle = new Vector2(position.x - launchPlatform.position.x, position.y - launchPlatform.position.y);
+            launch(angle);
+        }
+    }
+
+    private void constrainToPlayArea()
+    {
         // Right edge
         if (position.x + Constants.BALL_RADIUS >= Constants.WORLD_WIDTH) {
             position.x = Constants.WORLD_WIDTH - Constants.BALL_RADIUS;

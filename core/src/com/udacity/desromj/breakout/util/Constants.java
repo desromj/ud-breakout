@@ -21,6 +21,9 @@ public class Constants
     public static final float BALL_SPEED = 400.0f;
     public static final Color BALL_COLOR = Color.RED;
 
+    // Area within/above the platform within which the ball can be hit (including its redius)
+    public static final float BALL_HIT_ALLOWANCE = 0.02f;
+
     /** Platform's height from the bottom of the screen */
     public static final float PLATFORM_BOTTOM_MARGIN = 40.0f;
 
