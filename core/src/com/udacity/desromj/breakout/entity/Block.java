@@ -12,7 +12,7 @@ import java.util.Random;
  */
 public class Block
 {
-    Vector2 position;
+    public Vector2 position;
     BlockType blockType;
 
     public Block(Vector2 position)

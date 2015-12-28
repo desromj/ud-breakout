@@ -6,6 +6,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.udacity.desromj.breakout.entity.Ball;
@@ -30,7 +31,7 @@ public class BreakoutScreen extends ScreenAdapter
     Difficulty difficulty;
 
     // Single block for testing physics out
-    Block block;
+    DelayedRemovalArray<Block> blocks;
 
     // Other game-specific variables
     int numLives;
@@ -54,7 +55,16 @@ public class BreakoutScreen extends ScreenAdapter
         platform = new Platform();
         ball = new Ball(platform, viewport, difficulty);
 
-        block = new Block(new Vector2(Constants.WORLD_WIDTH / 2, Constants.WORLD_HEIGHT / 1.5f));
+        blocks = new DelayedRemovalArray<Block>();
+        blocks.add(new Block(new Vector2(Constants.WORLD_WIDTH / 2, Constants.WORLD_HEIGHT / 1.5f)));
+        blocks.add(new Block(new Vector2(Constants.WORLD_WIDTH / 2 + 1 * Constants.BLOCK_WIDTH, Constants.WORLD_HEIGHT / 1.5f)));
+        blocks.add(new Block(new Vector2(Constants.WORLD_WIDTH / 2 + 2 * Constants.BLOCK_WIDTH, Constants.WORLD_HEIGHT / 1.5f)));
+        blocks.add(new Block(new Vector2(Constants.WORLD_WIDTH / 2 + 3 * Constants.BLOCK_WIDTH, Constants.WORLD_HEIGHT / 1.5f)));
+        blocks.add(new Block(new Vector2(Constants.WORLD_WIDTH / 2 + 4 * Constants.BLOCK_WIDTH, Constants.WORLD_HEIGHT / 1.5f)));
+        blocks.add(new Block(new Vector2(Constants.WORLD_WIDTH / 2 - 1 * Constants.BLOCK_WIDTH, Constants.WORLD_HEIGHT / 1.5f)));
+        blocks.add(new Block(new Vector2(Constants.WORLD_WIDTH / 2 - 2 * Constants.BLOCK_WIDTH, Constants.WORLD_HEIGHT / 1.5f)));
+        blocks.add(new Block(new Vector2(Constants.WORLD_WIDTH / 2 - 3 * Constants.BLOCK_WIDTH, Constants.WORLD_HEIGHT / 1.5f)));
+        blocks.add(new Block(new Vector2(Constants.WORLD_WIDTH / 2 - 4 * Constants.BLOCK_WIDTH, Constants.WORLD_HEIGHT / 1.5f)));
 
         Gdx.input.setInputProcessor(ball);
     }
@@ -76,6 +86,7 @@ public class BreakoutScreen extends ScreenAdapter
         ball.update(delta);
 
         checkBallIsOnScreen();
+        checkBallCollisionWithBlocks();
 
         // Clear the screen to white - will be drawing a custom rectangle colour blend
         Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -99,9 +110,30 @@ public class BreakoutScreen extends ScreenAdapter
         platform.render(renderer);
         ball.render(renderer);
 
-        block.render(renderer);
+        for (Block block: blocks)
+            block.render(renderer);
 
         renderer.end();
+    }
+
+    /**
+     * Loops through all blocks onScreen and checks if the ball is colliding with them.
+     * If it is, determines whether or not to bounce the ball along the X or Y axis
+     *
+     * This will probably be moved to the Blocks class when it gets written
+      */
+    private void checkBallCollisionWithBlocks()
+    {
+        for (int i = 0; i < blocks.size; i++)
+        {
+            Block block = blocks.get(i);
+
+            if (ball.isColliding(block))
+            {
+                ball.bounceOffBlock(block);
+                blocks.removeIndex(i);
+            }
+        }
     }
 
     private void checkBallIsOnScreen()

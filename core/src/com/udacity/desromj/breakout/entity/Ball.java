@@ -89,23 +89,59 @@ public class Ball extends InputAdapter
         // Right edge
         if (position.x + Constants.BALL_RADIUS >= Constants.WORLD_WIDTH) {
             position.x = Constants.WORLD_WIDTH - Constants.BALL_RADIUS;
-            velocity.x = -velocity.x;
+            bounceX();
         }
 
         // Left edge
         if (position.x - Constants.BALL_RADIUS <= 0.0f) {
             position.x = Constants.BALL_RADIUS;
-            velocity.x = -velocity.x;
+            bounceX();
         }
 
         // Top edge
         if (position.y + Constants.BALL_RADIUS >= Constants.WORLD_HEIGHT) {
             position.y = Constants.WORLD_HEIGHT - Constants.BALL_RADIUS;
-            velocity.y = -velocity.y;
+            bounceY();
         }
 
         // Check the bottom edge - if the ball is offscreen
         isOffScreen = (position.y <= 0);
+    }
+
+    // Bounce off the block in the desired direction - bounces depending on whether it hits from the x or y axis first
+    public void bounceOffBlock(Block block)
+    {
+        // If we bounce from the top or bottom, we will be within the x-range of the block
+        if (Math.abs(this.position.x - block.position.x) <= Constants.BLOCK_WIDTH / 2)
+            bounceY();
+        else
+            bounceX();
+    }
+
+    /**
+     * Checks if the ball is colliding with the passed block
+     * @param block
+     * @return
+     */
+    public boolean isColliding(Block block)
+    {
+        if (Math.abs(this.position.x - block.position.x) < Constants.BALL_RADIUS + Constants.BLOCK_WIDTH / 2
+            && Math.abs(this.position.y - block.position.y) < Constants.BALL_RADIUS + Constants.BLOCK_HEIGHT / 2)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public void bounceX()
+    {
+        velocity.x = -velocity.x;
+    }
+
+    public void bounceY()
+    {
+        velocity.y = -velocity.y;
     }
 
     public void render(ShapeRenderer renderer)
