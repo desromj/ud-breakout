@@ -182,7 +182,7 @@ public class BreakoutScreen extends ScreenAdapter
                 endGame(false);
             } else {
                 ball.init();
-                score.currentCombo = 1;
+                score.currentCombo = 0;
             }
         }
     }

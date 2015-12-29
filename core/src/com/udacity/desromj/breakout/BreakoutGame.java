@@ -13,7 +13,7 @@ public class BreakoutGame extends Game
 	@Override
 	public void create ()
     {
-		setScreen(new BreakoutScreen(this, Difficulty.MEDIUM));
+		showStartScreen();
 	}
 
 	public void showStartScreen()

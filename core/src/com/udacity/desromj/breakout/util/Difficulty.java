@@ -27,4 +27,13 @@ public enum Difficulty
         this.timeLimitInMinutes = timeLimitInMinutes;
         this.numLives = numLives;
     }
+
+    public static Difficulty getDifficulty(String label)
+    {
+        for (Difficulty diff: Difficulty.values())
+            if (diff.label.equalsIgnoreCase(label))
+                return diff;
+
+        return Difficulty.MEDIUM;
+    }
 }
