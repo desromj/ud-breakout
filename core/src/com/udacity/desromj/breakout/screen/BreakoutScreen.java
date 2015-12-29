@@ -1,6 +1,5 @@
 package com.udacity.desromj.breakout.screen;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
@@ -53,11 +52,6 @@ public class BreakoutScreen extends ScreenAdapter
         this.difficulty = difficulty;
         this.numLives = difficulty.numLives;
         this.score = new Score();
-
-        spriteBatch = new SpriteBatch();
-        font = new BitmapFont();
-        font.getData().setScale(1.0f);
-        font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
     }
 
     @Override
@@ -70,6 +64,11 @@ public class BreakoutScreen extends ScreenAdapter
         blocks = new Blocks(difficulty);
 
         Gdx.input.setInputProcessor(ball);
+
+        spriteBatch = new SpriteBatch();
+        font = new BitmapFont();
+        font.getData().setScale(1.0f);
+        font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
     }
 
     @Override
@@ -88,6 +87,11 @@ public class BreakoutScreen extends ScreenAdapter
         platform.update(delta);
         ball.update(delta);
 
+        // Check if we win
+        if (blocks.blocks.size <= 0)
+            endGame(true);
+
+        // Otherwise, continue with updates
         checkBallIsOnScreen();
         checkBallCollisionWithBlocks();
 
@@ -175,7 +179,7 @@ public class BreakoutScreen extends ScreenAdapter
         if (ball.isOffScreen)
         {
             if (--numLives <= 0) {
-                endGame();
+                endGame(false);
             } else {
                 ball.init();
                 score.currentCombo = 1;
@@ -183,15 +187,20 @@ public class BreakoutScreen extends ScreenAdapter
         }
     }
 
-    private void endGame()
+    private void endGame(boolean win)
     {
-        // TODO: Show the gameover screen
+        if (win)
+            game.showWinScreen(score);
+        else
+            game.showGameOverScreen(score);
     }
 
     @Override
     public void hide()
     {
         renderer.dispose();
+        spriteBatch.dispose();
+        font.dispose();
     }
 
     @Override

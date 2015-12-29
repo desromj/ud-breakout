@@ -12,6 +12,9 @@ public class Constants
     public static final float WORLD_WIDTH = 800.0f;
     public static final float WORLD_HEIGHT = 600.0f;
 
+    public static final String GAME_TITLE = "Quiv's Breakout!!!";
+    public static final float TITLE_BORDER = 40.0f;
+
     public static final float PLATFORM_WIDTH = 75.0f;
     public static final float PLATFORM_HEIGHT = 20.0f;
     public static final float PLATFORM_MAX_SPEED = 300.0f;
@@ -39,6 +42,9 @@ public class Constants
 
     public static final float TEXT_MARGIN = 8.0f;
     public static final Color TEXT_COLOR = Color.WHITE;
+    public static final Color WIN_TEXT_COLOR = Color.BLACK;
+    public static final Color LOSE_TEXT_COLOR = Color.BLUE;
+
 
 
 

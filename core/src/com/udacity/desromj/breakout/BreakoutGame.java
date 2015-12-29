@@ -1,6 +1,7 @@
 package com.udacity.desromj.breakout;
 
 import com.badlogic.gdx.Game;
+import com.udacity.desromj.breakout.entity.Score;
 import com.udacity.desromj.breakout.screen.BreakoutScreen;
 import com.udacity.desromj.breakout.screen.GameOverScreen;
 import com.udacity.desromj.breakout.screen.StartScreen;
@@ -25,13 +26,13 @@ public class BreakoutGame extends Game
         setScreen(new BreakoutScreen(this, diff));
     }
 
-    public void showWinScreen()
+    public void showWinScreen(Score score)
     {
-        setScreen(new WinScreen(this));
+        setScreen(new WinScreen(this, score));
     }
-    
-    public void showGameOverScreen()
+
+    public void showGameOverScreen(Score score)
     {
-        setScreen(new GameOverScreen(this));
+        setScreen(new GameOverScreen(this, score));
     }
 }
