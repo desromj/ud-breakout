@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.udacity.desromj.breakout.BreakoutGame;
 import com.udacity.desromj.breakout.entity.Ball;
 import com.udacity.desromj.breakout.entity.Block;
 import com.udacity.desromj.breakout.entity.Blocks;
@@ -24,7 +25,7 @@ import com.udacity.desromj.breakout.util.Difficulty;
  */
 public class BreakoutScreen extends ScreenAdapter
 {
-    Game game;
+    BreakoutGame game;
 
     ShapeRenderer renderer;
     Viewport viewport;
@@ -46,7 +47,7 @@ public class BreakoutScreen extends ScreenAdapter
      * Keep a reference to the parent game so we can switch screens
      * @param game
      */
-    public BreakoutScreen(Game game, Difficulty difficulty)
+    public BreakoutScreen(BreakoutGame game, Difficulty difficulty)
     {
         this.game = game;
         this.difficulty = difficulty;
@@ -137,7 +138,7 @@ public class BreakoutScreen extends ScreenAdapter
                 spriteBatch,
                 "Lives: " + numLives + "\n" +
                         "Current Combo: " + score.currentCombo + "\n" +
-                        "Combo Color: " + score.lastColorDestroyed,
+                        "Combo Color: " + score.getLastComboLabel(),
                 Constants.WORLD_WIDTH - Constants.TEXT_MARGIN,
                 Constants.WORLD_HEIGHT - Constants.TEXT_MARGIN,
                 0,

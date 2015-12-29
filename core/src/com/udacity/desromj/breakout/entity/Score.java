@@ -55,4 +55,14 @@ public class Score
 
         return String.valueOf(addScore) + ((currentCombo > 1) ? " x " + currentCombo : "");
     }
+
+    public String getLastComboLabel()
+    {
+        if (lastColorDestroyed == Color.YELLOW) return "Yellow";
+        if (lastColorDestroyed == Color.RED) return "Red";
+        if (lastColorDestroyed == Color.BLUE) return "Blue";
+        if (lastColorDestroyed == Color.GREEN) return "Green";
+
+        return "None";
+    }
 }

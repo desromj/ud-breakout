@@ -125,8 +125,8 @@ public class Ball extends InputAdapter
      */
     public boolean isColliding(Block block)
     {
-        if (Math.abs(this.position.x - block.position.x) < Constants.BALL_RADIUS + Constants.BLOCK_WIDTH / 2
-            && Math.abs(this.position.y - block.position.y) < Constants.BALL_RADIUS + Constants.BLOCK_HEIGHT / 2)
+        if (Math.abs(this.position.x - block.position.x) < Constants.BALL_RADIUS + Constants.BALL_HIT_ALLOWANCE + Constants.BLOCK_WIDTH / 2
+            && Math.abs(this.position.y - block.position.y) < Constants.BALL_RADIUS + Constants.BALL_HIT_ALLOWANCE + Constants.BLOCK_HEIGHT / 2)
         {
             return true;
         }

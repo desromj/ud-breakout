@@ -68,20 +68,22 @@ public class Block
 
     public enum BlockType
     {
-        GREEN(Color.GREEN, 100),
-        YELLOW(Color.YELLOW, 200),
-        BLUE(Color.BLUE, 350),
-        RED(Color.RED, 500);
+        GREEN(Color.GREEN, 100, "Green"),
+        YELLOW(Color.YELLOW, 200, "Yellow"),
+        BLUE(Color.BLUE, 350, "Blue"),
+        RED(Color.RED, 500, "Red");
 
         Color color;
         int pointValue;
+        String label;
 
         private static final Random random = new Random();
 
-        private BlockType(Color color, int pointValue)
+        private BlockType(Color color, int pointValue, String label)
         {
             this.color = color;
             this.pointValue = pointValue;
+            this.label = label;
         }
 
         public static BlockType makeRandomBlock()
