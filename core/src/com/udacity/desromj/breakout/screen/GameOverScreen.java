@@ -1,6 +1,7 @@
 package com.udacity.desromj.breakout.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -18,7 +19,7 @@ import com.udacity.desromj.breakout.util.Constants;
 /**
  * Created by Quiv on 2015-12-27.
  */
-public class GameOverScreen extends ScreenAdapter
+public class GameOverScreen extends ScreenAdapter implements InputProcessor
 {
     BreakoutGame game;
     Score score;
@@ -87,6 +88,7 @@ public class GameOverScreen extends ScreenAdapter
         font = new BitmapFont();
         font.getData().setScale(7.5f);
         font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        Gdx.input.setInputProcessor(this);
     }
 
     @Override
@@ -101,5 +103,46 @@ public class GameOverScreen extends ScreenAdapter
         renderer.dispose();
         batch.dispose();
         font.dispose();
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        game.showStartScreen();
+        return true;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        return false;
     }
 }
