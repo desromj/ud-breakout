@@ -37,6 +37,8 @@ public class Constants
     public static final Color BACKGROUND_COLOR_BOTTOM = Color.CYAN;
     public static final Color BACKGROUND_COLOR_TOP = Color.NAVY;
 
+    public static final float TEXT_MARGIN = 8.0f;
+    public static final Color TEXT_COLOR = Color.WHITE;
 
 
 

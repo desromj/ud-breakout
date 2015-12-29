@@ -49,7 +49,19 @@ public class Block
         );
     }
 
+    public int getScore()
+    {
+        return blockType.pointValue;
+    }
 
+    public static int getScore(Color color)
+    {
+        for (BlockType type: BlockType.values())
+            if (type.color == color)
+                return type.pointValue;
+
+        return 0;
+    }
 
 
 

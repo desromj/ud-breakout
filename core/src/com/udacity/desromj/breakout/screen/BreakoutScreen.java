@@ -4,15 +4,18 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.DelayedRemovalArray;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.udacity.desromj.breakout.entity.Ball;
 import com.udacity.desromj.breakout.entity.Block;
 import com.udacity.desromj.breakout.entity.Blocks;
 import com.udacity.desromj.breakout.entity.Platform;
+import com.udacity.desromj.breakout.entity.Score;
 import com.udacity.desromj.breakout.util.Constants;
 import com.udacity.desromj.breakout.util.Difficulty;
 
@@ -31,9 +34,13 @@ public class BreakoutScreen extends ScreenAdapter
     Ball ball;
     Difficulty difficulty;
     Blocks blocks;
+    Score score;
 
     // Other game-specific variables
     int numLives;
+
+    SpriteBatch spriteBatch;
+    BitmapFont font;
 
     /**
      * Keep a reference to the parent game so we can switch screens
@@ -44,6 +51,12 @@ public class BreakoutScreen extends ScreenAdapter
         this.game = game;
         this.difficulty = difficulty;
         this.numLives = difficulty.numLives;
+        this.score = new Score();
+
+        spriteBatch = new SpriteBatch();
+        font = new BitmapFont();
+        font.getData().setScale(1.0f);
+        font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
     }
 
     @Override
@@ -53,7 +66,6 @@ public class BreakoutScreen extends ScreenAdapter
         viewport = new ExtendViewport(Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
         platform = new Platform();
         ball = new Ball(platform, viewport, difficulty);
-
         blocks = new Blocks(difficulty);
 
         Gdx.input.setInputProcessor(ball);
@@ -104,6 +116,36 @@ public class BreakoutScreen extends ScreenAdapter
 
 
         renderer.end();
+
+        // Start text and sprite rendering
+        spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
+        spriteBatch.begin();
+        spriteBatch.setColor(Constants.TEXT_COLOR);
+
+        font.draw(
+                spriteBatch,
+                "Score: " + score.score + "\n" +
+                        "Top Score: " + score.topScore,
+                Constants.TEXT_MARGIN,
+                Constants.WORLD_HEIGHT - Constants.TEXT_MARGIN,
+                0,
+                Align.topLeft,
+                false
+        );
+
+        font.draw(
+                spriteBatch,
+                "Lives: " + numLives + "\n" +
+                        "Current Combo: " + score.currentCombo + "\n" +
+                        "Combo Color: " + score.lastColorDestroyed,
+                Constants.WORLD_WIDTH - Constants.TEXT_MARGIN,
+                Constants.WORLD_HEIGHT - Constants.TEXT_MARGIN,
+                0,
+                Align.topRight,
+                false
+        );
+
+        spriteBatch.end();
     }
 
     /**
@@ -117,8 +159,11 @@ public class BreakoutScreen extends ScreenAdapter
         for (int i = 0; i < blocks.blocks.size; i++) {
             Block block = blocks.blocks.get(i);
 
-            if (ball.isColliding(block)) {
+            if (ball.isColliding(block))
+            {
                 ball.bounceOffBlock(block);
+                score.addScore(block);
+
                 blocks.blocks.removeIndex(i);
             }
         }
@@ -132,13 +177,14 @@ public class BreakoutScreen extends ScreenAdapter
                 endGame();
             } else {
                 ball.init();
+                score.currentCombo = 1;
             }
         }
     }
 
     private void endGame()
     {
-        // TODO: Show the gameover screen, save high score
+        // TODO: Show the gameover screen
     }
 
     @Override
@@ -151,5 +197,7 @@ public class BreakoutScreen extends ScreenAdapter
     public void dispose()
     {
         renderer.dispose();
+        spriteBatch.dispose();
+        font.dispose();
     }
 }
