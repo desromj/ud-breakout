@@ -22,17 +22,15 @@ import com.udacity.desromj.breakout.util.Constants;
 public class GameOverScreen extends ScreenAdapter implements InputProcessor
 {
     BreakoutGame game;
-    Score score;
 
     ShapeRenderer renderer;
     SpriteBatch batch;
     BitmapFont font;
     Viewport viewport;
 
-    public GameOverScreen(BreakoutGame game, Score score)
+    public GameOverScreen(BreakoutGame game)
     {
         this.game = game;
-        this.score = score;
         viewport = new ExtendViewport(Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
     }
 
@@ -65,7 +63,7 @@ public class GameOverScreen extends ScreenAdapter implements InputProcessor
 
         font.draw(
                 batch,
-                "You Lose!!!\nYour Score: " + score.score + "\nTop Score: " + score.topScore,
+                "You Lose!!!\nYour Score: " + game.score.score + "\nTop Score: " + game.score.topScore,
                 Constants.WORLD_WIDTH / 2,
                 Constants.WORLD_HEIGHT / 2,
                 0,

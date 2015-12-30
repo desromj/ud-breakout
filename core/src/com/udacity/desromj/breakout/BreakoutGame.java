@@ -10,9 +10,12 @@ import com.udacity.desromj.breakout.util.Difficulty;
 
 public class BreakoutGame extends Game
 {
+    public Score score;
+
 	@Override
 	public void create ()
     {
+        score = new Score();
 		showStartScreen();
 	}
 
@@ -26,13 +29,13 @@ public class BreakoutGame extends Game
         setScreen(new BreakoutScreen(this, diff));
     }
 
-    public void showWinScreen(Score score)
+    public void showWinScreen()
     {
-        setScreen(new WinScreen(this, score));
+        setScreen(new WinScreen(this));
     }
 
-    public void showGameOverScreen(Score score)
+    public void showGameOverScreen()
     {
-        setScreen(new GameOverScreen(this, score));
+        setScreen(new GameOverScreen(this));
     }
 }

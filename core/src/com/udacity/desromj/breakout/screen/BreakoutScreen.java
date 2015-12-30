@@ -34,7 +34,6 @@ public class BreakoutScreen extends ScreenAdapter
     Ball ball;
     Difficulty difficulty;
     Blocks blocks;
-    Score score;
 
     // Other game-specific variables
     int numLives;
@@ -51,7 +50,6 @@ public class BreakoutScreen extends ScreenAdapter
         this.game = game;
         this.difficulty = difficulty;
         this.numLives = difficulty.numLives;
-        this.score = new Score();
     }
 
     @Override
@@ -127,8 +125,8 @@ public class BreakoutScreen extends ScreenAdapter
 
         font.draw(
                 spriteBatch,
-                "Score: " + score.score + "\n" +
-                        "Top Score: " + score.topScore,
+                "Score: " + game.score.score + "\n" +
+                        "Top Score: " + game.score.topScore,
                 Constants.TEXT_MARGIN,
                 Constants.WORLD_HEIGHT - Constants.TEXT_MARGIN,
                 0,
@@ -139,8 +137,8 @@ public class BreakoutScreen extends ScreenAdapter
         font.draw(
                 spriteBatch,
                 "Lives: " + numLives + "\n" +
-                        "Current Combo: " + score.currentCombo + "\n" +
-                        "Combo Color: " + score.getLastComboLabel(),
+                        "Current Combo: " + game.score.currentCombo + "\n" +
+                        "Combo Color: " + game.score.getLastComboLabel(),
                 Constants.WORLD_WIDTH - Constants.TEXT_MARGIN,
                 Constants.WORLD_HEIGHT - Constants.TEXT_MARGIN,
                 0,
@@ -165,7 +163,7 @@ public class BreakoutScreen extends ScreenAdapter
             if (ball.isColliding(block))
             {
                 ball.bounceOffBlock(block);
-                score.addScore(block);
+                game.score.addScore(block);
 
                 blocks.blocks.removeIndex(i);
             }
@@ -180,7 +178,7 @@ public class BreakoutScreen extends ScreenAdapter
                 endGame(false);
             } else {
                 ball.init();
-                score.currentCombo = 0;
+                game.score.currentCombo = 0;
             }
         }
     }
@@ -188,9 +186,9 @@ public class BreakoutScreen extends ScreenAdapter
     private void endGame(boolean win)
     {
         if (win)
-            game.showWinScreen(score);
+            game.showWinScreen();
         else
-            game.showGameOverScreen(score);
+            game.showGameOverScreen();
     }
 
     @Override

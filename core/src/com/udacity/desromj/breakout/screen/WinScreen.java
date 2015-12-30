@@ -22,17 +22,15 @@ import com.udacity.desromj.breakout.util.Constants;
 public class WinScreen extends ScreenAdapter implements InputProcessor
 {
     BreakoutGame game;
-    Score score;
 
     ShapeRenderer renderer;
     SpriteBatch batch;
     BitmapFont font;
     Viewport viewport;
 
-    public WinScreen(BreakoutGame game, Score score)
+    public WinScreen(BreakoutGame game)
     {
         this.game = game;
-        this.score = score;
         viewport = new ExtendViewport(Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
     }
 
@@ -65,7 +63,7 @@ public class WinScreen extends ScreenAdapter implements InputProcessor
 
         font.draw(
                 batch,
-                "You Win!!!\nYour Score: " + score.score + "\nTop Score: " + score.topScore,
+                "You Win!!!\nYour Score: " + game.score.score + "\nTop Score: " + game.score.topScore,
                 Constants.WORLD_WIDTH / 2,
                 Constants.WORLD_HEIGHT / 2,
                 0,
