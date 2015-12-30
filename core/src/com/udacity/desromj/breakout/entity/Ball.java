@@ -1,10 +1,8 @@
 package com.udacity.desromj.breakout.entity;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.udacity.desromj.breakout.util.Constants;
@@ -153,8 +151,8 @@ public class Ball extends InputAdapter
     public void launch(Vector2 target)
     {
         moveState = MoveState.MOVING;
-        velocity.x = target.nor().x * Constants.BALL_SPEED * difficulty.ballSpeedMultiplier;
-        velocity.y = target.nor().y * Constants.BALL_SPEED * difficulty.ballSpeedMultiplier;
+        velocity.x = target.nor().x * Constants.BALL_SPEED * difficulty.speedMultiplier;
+        velocity.y = target.nor().y * Constants.BALL_SPEED * difficulty.speedMultiplier;
     }
 
     @Override

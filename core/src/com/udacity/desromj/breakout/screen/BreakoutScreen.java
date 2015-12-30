@@ -15,7 +15,6 @@ import com.udacity.desromj.breakout.entity.Ball;
 import com.udacity.desromj.breakout.entity.Block;
 import com.udacity.desromj.breakout.entity.Blocks;
 import com.udacity.desromj.breakout.entity.Platform;
-import com.udacity.desromj.breakout.entity.Score;
 import com.udacity.desromj.breakout.util.Constants;
 import com.udacity.desromj.breakout.util.Difficulty;
 
@@ -57,7 +56,7 @@ public class BreakoutScreen extends ScreenAdapter
     {
         renderer = new ShapeRenderer();
         viewport = new ExtendViewport(Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
-        platform = new Platform();
+        platform = new Platform(difficulty);
         ball = new Ball(platform, viewport, difficulty);
         blocks = new Blocks(difficulty);
 

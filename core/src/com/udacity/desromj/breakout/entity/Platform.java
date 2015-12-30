@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.udacity.desromj.breakout.util.Constants;
+import com.udacity.desromj.breakout.util.Difficulty;
 
 /**
  * Created by Quiv on 2015-12-27.
@@ -15,27 +16,29 @@ public class Platform
     Vector2 position;
     DirectionMoved lastDirection;
     Rectangle hitRect;
+    Difficulty difficulty;
 
-    public Platform()
+    public Platform(Difficulty difficulty)
     {
-        init();
+        init(difficulty);
     }
 
-    public void init()
+    public void init(Difficulty difficulty)
     {
         position = new Vector2(Constants.WORLD_WIDTH / 2, Constants.PLATFORM_BOTTOM_MARGIN);
         lastDirection = DirectionMoved.RIGHT;
         hitRect = new Rectangle();
+        this.difficulty = difficulty;
     }
 
     public void update(float delta)
     {
         // Keyboard Controls
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            position.x -= Constants.PLATFORM_MAX_SPEED * delta;
+            position.x -= Constants.PLATFORM_MAX_SPEED * delta * difficulty.speedMultiplier;
             lastDirection = DirectionMoved.LEFT;
         } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            position.x += Constants.PLATFORM_MAX_SPEED * delta;
+            position.x += Constants.PLATFORM_MAX_SPEED * delta * difficulty.speedMultiplier;
             lastDirection = DirectionMoved.RIGHT;
         }
 
@@ -62,9 +65,9 @@ public class Platform
          */
         hitRect.set(
                 this.position.x - Constants.PLATFORM_WIDTH / 2,
-                this.position.y + Constants.PLATFORM_HEIGHT / 2 - Constants.BALL_HIT_ALLOWANCE,
+                this.position.y + Constants.BALL_HIT_ALLOWANCE,
                 Constants.PLATFORM_WIDTH,
-                Constants.BALL_RADIUS + Constants.BALL_HIT_ALLOWANCE
+                Constants.PLATFORM_HEIGHT / 2 + Constants.BALL_RADIUS + Constants.BALL_HIT_ALLOWANCE
         );
     }
 
