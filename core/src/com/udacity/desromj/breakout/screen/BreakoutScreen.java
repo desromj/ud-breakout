@@ -7,7 +7,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.udacity.desromj.breakout.BreakoutGame;
@@ -36,6 +38,7 @@ public class BreakoutScreen extends ScreenAdapter
 
     // Other game-specific variables
     int numLives;
+    Long timeStarted;
 
     SpriteBatch spriteBatch;
     BitmapFont font;
@@ -49,6 +52,7 @@ public class BreakoutScreen extends ScreenAdapter
         this.game = game;
         this.difficulty = difficulty;
         this.numLives = difficulty.numLives;
+        this.timeStarted = TimeUtils.nanoTime();
     }
 
     @Override
@@ -123,6 +127,30 @@ public class BreakoutScreen extends ScreenAdapter
         font.getData().setScale(Constants.INGAME_FONT_SCALE);
         font.setColor(Constants.TEXT_COLOR);
 
+        // Check the time remaining in the game due to difficulty
+        float elapsedTime = MathUtils.nanoToSec * (TimeUtils.nanoTime() - timeStarted);
+        float timeLeft = difficulty.timeLimitInMinutes * 60 - elapsedTime;
+
+        // End the game if our time is too long. Otherwise, proceed to display it
+        if (timeLeft < 0.0f)
+            endGame(false);
+
+        int minutesLeft = (int) (timeLeft / 60);
+        int secondsLeft = (int) (60 - elapsedTime % 60);
+
+        String secondsPrintable = (String.valueOf(secondsLeft).length() == 1) ? "0" + secondsLeft : String.valueOf(secondsLeft);
+
+        font.draw(
+                spriteBatch,
+                "Time Remaining: " + minutesLeft + ":" + secondsPrintable,
+                Constants.WORLD_WIDTH / 2,
+                Constants.WORLD_HEIGHT - Constants.TEXT_MARGIN,
+                0,
+                Align.center,
+                false
+        );
+
+        // Draw the rest of the GUI
         font.draw(
                 spriteBatch,
                 "Score: " + game.score.score + "\n" +

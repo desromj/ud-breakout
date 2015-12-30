@@ -5,10 +5,10 @@ package com.udacity.desromj.breakout.util;
  */
 public enum Difficulty
 {
-    EASY(0.75f, 4, 0.75f, "Breeze", 10, 5),
-    MEDIUM(1.0f, 6, 1.0f, "Gust", 8, 4),
-    HARD(1.25f, 7, 1.25f, "Storm", 7, 3),
-    INSANE(1.5f, 9, 1.5f, "Hurricane", 1, 3);
+    EASY(0.75f, 4, 0.75f, "Breeze", 5, 5),
+    MEDIUM(1.0f, 6, 1.0f, "Gust", 4, 4),
+    HARD(1.25f, 7, 1.25f, "Storm", 3, 3),
+    INSANE(1.5f, 9, 1.5f, "Hurricane", 2, 3);
 
     public float scoreMultiplier;
     public int rowsOfBlocks;
