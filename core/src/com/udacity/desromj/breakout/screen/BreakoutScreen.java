@@ -65,7 +65,6 @@ public class BreakoutScreen extends ScreenAdapter
 
         spriteBatch = new SpriteBatch();
         font = new BitmapFont();
-        font.getData().setScale(1.0f);
         font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
     }
 
@@ -121,7 +120,9 @@ public class BreakoutScreen extends ScreenAdapter
         // Start text and sprite rendering
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
         spriteBatch.begin();
-        spriteBatch.setColor(Constants.TEXT_COLOR);
+
+        font.getData().setScale(Constants.INGAME_FONT_SCALE);
+        font.setColor(Constants.TEXT_COLOR);
 
         font.draw(
                 spriteBatch,

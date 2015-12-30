@@ -91,6 +91,7 @@ public class StartScreen extends ScreenAdapter implements InputProcessor
         batch.begin();
         font.setColor(Constants.TEXT_COLOR);
 
+        font.getData().setScale(Constants.TITLE_FONT_SCALE);
         font.draw(
                 batch,
                 Constants.GAME_TITLE,
@@ -102,6 +103,7 @@ public class StartScreen extends ScreenAdapter implements InputProcessor
         );
 
         // Button Labels (difficulty labels)
+        font.getData().setScale(Constants.START_BUTTON_FONT_SCALE);
         font.draw(
                 batch,
                 Difficulty.EASY.label,
@@ -152,7 +154,6 @@ public class StartScreen extends ScreenAdapter implements InputProcessor
         renderer = new ShapeRenderer();
         batch = new SpriteBatch();
         font = new BitmapFont();
-        font.getData().setScale(2.0f);
         font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         Gdx.input.setInputProcessor(this);
 

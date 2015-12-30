@@ -51,7 +51,11 @@ public class Constants
     public static final Color LOSE_TEXT_COLOR = Color.BLUE;
     public static final Color TOP_SCORE_TEXT_COLOR = Color.CORAL;
 
-
+    public static final float START_BUTTON_FONT_SCALE = 2.0f;
+    public static final float TOP_SCORE_FONT_SCALE = 3.0f;
+    public static final float GAME_FINISHED_FONT_SCALE = 2.5f;
+    public static final float TITLE_FONT_SCALE = 4.0f;
+    public static final float INGAME_FONT_SCALE = 1.0f;
 
 
 
