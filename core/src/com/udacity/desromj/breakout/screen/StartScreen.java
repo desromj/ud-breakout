@@ -235,6 +235,9 @@ public class StartScreen extends ScreenAdapter implements InputProcessor
         } else if (btnInsane.contains(unprojectedPos)) {
             game.showBreakoutScreen(Difficulty.INSANE);
         }
+
+        // Reset the score when we begin a game
+        this.game.score.init();
     }
 
     @Override
