@@ -16,9 +16,9 @@ public class Constants
     public static final float TITLE_BORDER = 40.0f;
 
     // Get a dark background for our white to stand out against
-    public static final float START_BUTTON_WIDTH = 80.0f;
-    public static final float START_BUTTON_HEIGHT = 60.0f;
-    public static final Color START_BUTTON_COLOR = new Color(150.0f, 40.0f, 150.0f, 255.0f);
+    public static final float START_BUTTON_WIDTH = 160.0f;
+    public static final float START_BUTTON_HEIGHT = 120.0f;
+    public static final Color START_BUTTON_COLOR = Color.BLUE;
 
     public static final float PLATFORM_WIDTH = 75.0f;
     public static final float PLATFORM_HEIGHT = 20.0f;

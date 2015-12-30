@@ -31,12 +31,11 @@ public class StartScreen extends ScreenAdapter implements InputProcessor
     BitmapFont font;
     Viewport viewport;
 
-    private float[] centreRatios = new float[] {
-            2.0f/5.0f, 2.0f/5.0f,
-            4.0f/5.0f, 2.0f/5.0f,
-            2.0f/5.0f, 4.0f/5.0f,
-            4.0f/5.0f, 4.0f/5.0f
-    };
+    Rectangle
+        btnEasy,
+        btnMedium,
+        btnHard,
+        btnInsane;
 
     public StartScreen(BreakoutGame game)
     {
@@ -78,21 +77,17 @@ public class StartScreen extends ScreenAdapter implements InputProcessor
         // Start Buttons
         renderer.setColor(Constants.START_BUTTON_COLOR);
 
-        for (int i = 0; i < centreRatios.length; i += 2)
-        {
-            renderer.rect(
-                    centreRatios[i] * Constants.WORLD_WIDTH - Constants.START_BUTTON_WIDTH / 2,
-                    centreRatios[i + 1] * Constants.WORLD_HEIGHT - Constants.START_BUTTON_HEIGHT / 2,
-                    Constants.START_BUTTON_WIDTH,
-                    Constants.START_BUTTON_HEIGHT
-            );
-        }
+        renderer.rect(btnEasy.x, btnEasy.y, btnEasy.width, btnEasy.height);
+        renderer.rect(btnMedium.x, btnMedium.y, btnMedium.width, btnMedium.height);
+        renderer.rect(btnHard.x, btnHard.y, btnHard.width, btnHard.height);
+        renderer.rect(btnInsane.x, btnInsane.y, btnInsane.width, btnInsane.height);
 
         renderer.end();
 
         // Text drawing
 
         // Title
+        batch.setProjectionMatrix(viewport.getCamera().combined);
         batch.begin();
         batch.setColor(Constants.TEXT_COLOR);
 
@@ -100,25 +95,49 @@ public class StartScreen extends ScreenAdapter implements InputProcessor
                 batch,
                 Constants.GAME_TITLE,
                 Constants.WORLD_WIDTH / 2,
-                Constants.WORLD_HEIGHT / 1.2f,
+                Constants.WORLD_HEIGHT / 1.1f,
                 0,
                 Align.center,
                 false
         );
 
         // Button Labels (difficulty labels)
-        for (int i = 0; i < centreRatios.length; i += 2)
-        {
-            font.draw(
-                    batch,
-                    Difficulty.values()[i / 2].label,
-                    centreRatios[i] * Constants.WORLD_WIDTH - Constants.START_BUTTON_WIDTH / 2,
-                    centreRatios[i + 1] * Constants.WORLD_HEIGHT - Constants.START_BUTTON_HEIGHT / 2,
-                    0,
-                    Align.center,
-                    false
-            );
-        }
+        font.draw(
+                batch,
+                Difficulty.EASY.label,
+                btnEasy.x + btnEasy.width / 2,
+                btnEasy.y + btnEasy.height / 2,
+                0,
+                Align.center,
+                false
+        );
+        font.draw(
+                batch,
+                Difficulty.MEDIUM.label,
+                btnMedium.x + btnMedium.width / 2,
+                btnMedium.y + btnMedium.height / 2,
+                0,
+                Align.center,
+                false
+        );
+        font.draw(
+                batch,
+                Difficulty.HARD.label,
+                btnHard.x + btnHard.width / 2,
+                btnHard.y + btnHard.height / 2,
+                0,
+                Align.center,
+                false
+        );
+        font.draw(
+                batch,
+                Difficulty.INSANE.label,
+                btnInsane.x + btnInsane.width / 2,
+                btnInsane.y + btnInsane.height / 2,
+                0,
+                Align.center,
+                false
+        );
 
         batch.end();
     }
@@ -136,6 +155,36 @@ public class StartScreen extends ScreenAdapter implements InputProcessor
         font.getData().setScale(2.0f);
         font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         Gdx.input.setInputProcessor(this);
+
+        initRectangles();
+    }
+
+    private void initRectangles()
+    {
+        btnEasy = new Rectangle(
+                Constants.WORLD_WIDTH / 5 * 2 - Constants.START_BUTTON_WIDTH,
+                Constants.WORLD_HEIGHT / 5 * 2 - Constants.START_BUTTON_HEIGHT,
+                Constants.START_BUTTON_WIDTH,
+                Constants.START_BUTTON_HEIGHT
+        );
+        btnMedium = new Rectangle(
+                Constants.WORLD_WIDTH / 5 * 4 - Constants.START_BUTTON_WIDTH,
+                Constants.WORLD_HEIGHT / 5 * 2 - Constants.START_BUTTON_HEIGHT,
+                Constants.START_BUTTON_WIDTH,
+                Constants.START_BUTTON_HEIGHT
+        );
+        btnHard = new Rectangle(
+                Constants.WORLD_WIDTH / 5 * 2 - Constants.START_BUTTON_WIDTH,
+                Constants.WORLD_HEIGHT / 5 * 4 - Constants.START_BUTTON_HEIGHT,
+                Constants.START_BUTTON_WIDTH,
+                Constants.START_BUTTON_HEIGHT
+        );
+        btnInsane = new Rectangle(
+                Constants.WORLD_WIDTH / 5 * 4 - Constants.START_BUTTON_WIDTH,
+                Constants.WORLD_HEIGHT / 5 * 4 - Constants.START_BUTTON_HEIGHT,
+                Constants.START_BUTTON_WIDTH,
+                Constants.START_BUTTON_HEIGHT
+        );
     }
 
     @Override
@@ -177,21 +226,14 @@ public class StartScreen extends ScreenAdapter implements InputProcessor
 
     public void checkForPresses(Vector2 unprojectedPos)
     {
-        for (int i = 0; i < centreRatios.length; i += 2)
-        {
-            Rectangle rect = new Rectangle(
-                    centreRatios[i] * Constants.WORLD_WIDTH - Constants.START_BUTTON_WIDTH / 2,
-                    centreRatios[i + 1] * Constants.WORLD_HEIGHT - Constants.START_BUTTON_HEIGHT / 2,
-                    Constants.START_BUTTON_WIDTH,
-                    Constants.START_BUTTON_HEIGHT
-            );
-
-            if (rect.contains(unprojectedPos))
-            {
-                Difficulty difficulty = Difficulty.values()[i / 2];
-                game.showBreakoutScreen(difficulty);
-                return;
-            }
+        if (btnEasy.contains(unprojectedPos)) {
+            game.showBreakoutScreen(Difficulty.EASY);
+        } else if (btnMedium.contains(unprojectedPos)) {
+            game.showBreakoutScreen(Difficulty.MEDIUM);
+        } else if (btnHard.contains(unprojectedPos)) {
+            game.showBreakoutScreen(Difficulty.HARD);
+        } else if (btnInsane.contains(unprojectedPos)) {
+            game.showBreakoutScreen(Difficulty.INSANE);
         }
     }
 

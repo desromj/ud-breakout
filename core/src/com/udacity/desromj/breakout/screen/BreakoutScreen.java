@@ -113,12 +113,10 @@ public class BreakoutScreen extends ScreenAdapter
                 Constants.BACKGROUND_COLOR_TOP,
                 Constants.BACKGROUND_COLOR_TOP);
 
-        // TODO: Render evey other game object that requires it
+        // Render evey other game object that requires it
         platform.render(renderer);
         ball.render(renderer);
         blocks.render(renderer);
-
-
 
         renderer.end();
 
