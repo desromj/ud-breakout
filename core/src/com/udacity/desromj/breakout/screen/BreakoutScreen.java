@@ -194,9 +194,8 @@ public class BreakoutScreen extends ScreenAdapter
     @Override
     public void hide()
     {
-        renderer.dispose();
-        spriteBatch.dispose();
-        font.dispose();
+        // TODO: Used to dispose renderers here, which was causing errors due to an error:
+        // Cannot use offsets when Array Buffer Object is disabled
     }
 
     @Override
