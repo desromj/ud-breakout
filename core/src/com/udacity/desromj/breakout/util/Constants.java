@@ -49,6 +49,7 @@ public class Constants
     public static final Color TEXT_COLOR = Color.WHITE;
     public static final Color WIN_TEXT_COLOR = Color.BLACK;
     public static final Color LOSE_TEXT_COLOR = Color.BLUE;
+    public static final Color TOP_SCORE_TEXT_COLOR = Color.CORAL;
 
 
 

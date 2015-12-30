@@ -89,7 +89,7 @@ public class StartScreen extends ScreenAdapter implements InputProcessor
         // Title
         batch.setProjectionMatrix(viewport.getCamera().combined);
         batch.begin();
-        batch.setColor(Constants.TEXT_COLOR);
+        font.setColor(Constants.TEXT_COLOR);
 
         font.draw(
                 batch,

@@ -58,12 +58,28 @@ public class WinScreen extends ScreenAdapter implements InputProcessor
 
         renderer.end();
 
+        batch.setProjectionMatrix(viewport.getCamera().combined);
         batch.begin();
-        batch.setColor(Constants.WIN_TEXT_COLOR);
 
+        if (game.score.score >= game.score.topScore)
+        {
+            font.setColor(Constants.TOP_SCORE_TEXT_COLOR);
+            font.draw(
+                    batch,
+                    "New top score!\nCongratulations!!!",
+                    Constants.WORLD_WIDTH / 2,
+                    Constants.WORLD_HEIGHT / 1.2f,
+                    0,
+                    Align.center,
+                    false
+            );
+        }
+
+        font.setColor(Constants.WIN_TEXT_COLOR);
         font.draw(
                 batch,
-                "You Win!!!\nYour Score: " + game.score.score + "\nTop Score: " + game.score.topScore,
+                "You Win!!!\nYour Score: " + game.score.score + "\nTop Score: " + game.score.topScore +
+                        "\n\nTouch the Screen to play again!",
                 Constants.WORLD_WIDTH / 2,
                 Constants.WORLD_HEIGHT / 2,
                 0,
@@ -84,7 +100,7 @@ public class WinScreen extends ScreenAdapter implements InputProcessor
         renderer = new ShapeRenderer();
         batch = new SpriteBatch();
         font = new BitmapFont();
-        font.getData().setScale(7.5f);
+        font.getData().setScale(2.5f);
         font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         Gdx.input.setInputProcessor(this);
     }
