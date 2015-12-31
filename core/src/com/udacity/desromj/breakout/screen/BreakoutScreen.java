@@ -213,10 +213,12 @@ public class BreakoutScreen extends ScreenAdapter
 
     private void endGame(boolean win)
     {
-        if (win)
+        if (win) {
+            game.score.addScore(difficulty.clearBonus);
             game.showWinScreen();
-        else
+        } else {
             game.showGameOverScreen();
+        }
     }
 
     @Override

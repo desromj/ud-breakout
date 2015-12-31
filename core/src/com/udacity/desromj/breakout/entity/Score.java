@@ -48,12 +48,17 @@ public class Score
         }
 
         int addScore = block.blockType.pointValue * currentCombo;
-        score += addScore;
+        addScore(addScore);
+
+        return String.valueOf(addScore) + ((currentCombo > 1) ? " x " + currentCombo : "");
+    }
+
+    public void addScore(int points)
+    {
+        score += points;
 
         if (score >= topScore)
             topScore = score;
-
-        return String.valueOf(addScore) + ((currentCombo > 1) ? " x " + currentCombo : "");
     }
 
     public String getLastComboLabel()
