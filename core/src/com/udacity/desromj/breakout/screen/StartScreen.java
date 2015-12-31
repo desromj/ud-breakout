@@ -102,6 +102,18 @@ public class StartScreen extends ScreenAdapter implements InputProcessor
                 false
         );
 
+        // Description for buttons
+        font.getData().setScale(Constants.INGAME_FONT_SCALE);
+        font.draw(
+                batch,
+                "Click on a button to play that difficulty!",
+                Constants.WORLD_WIDTH / 2,
+                Constants.WORLD_HEIGHT - (Constants.WORLD_HEIGHT / 1.1f),
+                0,
+                Align.center,
+                false
+        );
+
         // Button Labels (difficulty labels)
         font.getData().setScale(Constants.START_BUTTON_FONT_SCALE);
         font.draw(
@@ -164,25 +176,25 @@ public class StartScreen extends ScreenAdapter implements InputProcessor
     {
         btnEasy = new Rectangle(
                 Constants.WORLD_WIDTH / 5 * 2 - Constants.START_BUTTON_WIDTH,
-                Constants.WORLD_HEIGHT / 5 * 2 - Constants.START_BUTTON_HEIGHT,
+                Constants.WORLD_HEIGHT / 5 * 4 - Constants.START_BUTTON_HEIGHT,
                 Constants.START_BUTTON_WIDTH,
                 Constants.START_BUTTON_HEIGHT
         );
         btnMedium = new Rectangle(
                 Constants.WORLD_WIDTH / 5 * 4 - Constants.START_BUTTON_WIDTH,
-                Constants.WORLD_HEIGHT / 5 * 2 - Constants.START_BUTTON_HEIGHT,
+                Constants.WORLD_HEIGHT / 5 * 4 - Constants.START_BUTTON_HEIGHT,
                 Constants.START_BUTTON_WIDTH,
                 Constants.START_BUTTON_HEIGHT
         );
         btnHard = new Rectangle(
                 Constants.WORLD_WIDTH / 5 * 2 - Constants.START_BUTTON_WIDTH,
-                Constants.WORLD_HEIGHT / 5 * 4 - Constants.START_BUTTON_HEIGHT,
+                Constants.WORLD_HEIGHT / 5 * 2 - Constants.START_BUTTON_HEIGHT,
                 Constants.START_BUTTON_WIDTH,
                 Constants.START_BUTTON_HEIGHT
         );
         btnInsane = new Rectangle(
                 Constants.WORLD_WIDTH / 5 * 4 - Constants.START_BUTTON_WIDTH,
-                Constants.WORLD_HEIGHT / 5 * 4 - Constants.START_BUTTON_HEIGHT,
+                Constants.WORLD_HEIGHT / 5 * 2 - Constants.START_BUTTON_HEIGHT,
                 Constants.START_BUTTON_WIDTH,
                 Constants.START_BUTTON_HEIGHT
         );
