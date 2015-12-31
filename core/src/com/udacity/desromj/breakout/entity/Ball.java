@@ -1,8 +1,11 @@
 package com.udacity.desromj.breakout.entity;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.graphics.g3d.particles.values.MeshSpawnShapeValue;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.udacity.desromj.breakout.util.Constants;
@@ -109,11 +112,21 @@ public class Ball extends InputAdapter
     // Bounce off the block in the desired direction - bounces depending on whether it hits from the x or y axis first
     public void bounceOffBlock(Block block)
     {
-        // If we bounce from the top or bottom, we will be within the x-range of the block
-        if (Math.abs(this.position.x - block.position.x) <= Constants.BLOCK_WIDTH / 2)
-            bounceY();
-        else
+        // Check the hit angle of the ball against the block
+        float hitAngle = (float) (Math.atan2(
+                block.position.y - this.position.y,
+                block.position.x - this.position.x
+        ) * 180.0f / Math.PI);
+
+        hitAngle = Math.abs(hitAngle % 180.0f);
+
+        Gdx.app.debug(TAG, "Hit Angle: " + hitAngle);
+
+        // if Bounce angle is 45 degrees, bounce Y when between 45-135. Bounce x between 0-45 and 135-180
+        if (hitAngle < Constants.BOUNCE_ANGLE_DEGREES || hitAngle > 180.0f - Constants.BOUNCE_ANGLE_DEGREES)
             bounceX();
+        else
+            bounceY();
     }
 
     /**

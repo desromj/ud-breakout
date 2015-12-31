@@ -57,7 +57,7 @@ public class Constants
     public static final float TITLE_FONT_SCALE = 4.0f;
     public static final float INGAME_FONT_SCALE = 1.0f;
 
-
+    public static final float BOUNCE_ANGLE_DEGREES = (float) Math.abs((Math.atan2(BLOCK_HEIGHT, BLOCK_WIDTH) * 180.0f / Math.PI));
 
 
 
