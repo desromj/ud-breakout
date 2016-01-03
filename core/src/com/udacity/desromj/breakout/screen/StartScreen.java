@@ -118,7 +118,7 @@ public class StartScreen extends ScreenAdapter implements InputProcessor
         font.getData().setScale(Constants.START_BUTTON_FONT_SCALE);
         font.draw(
                 batch,
-                Difficulty.EASY.label,
+                Difficulty.EASY.getLabel(),
                 btnEasy.x + btnEasy.width / 2,
                 btnEasy.y + btnEasy.height / 2,
                 0,
@@ -127,7 +127,7 @@ public class StartScreen extends ScreenAdapter implements InputProcessor
         );
         font.draw(
                 batch,
-                Difficulty.MEDIUM.label,
+                Difficulty.MEDIUM.getLabel(),
                 btnMedium.x + btnMedium.width / 2,
                 btnMedium.y + btnMedium.height / 2,
                 0,
@@ -136,7 +136,7 @@ public class StartScreen extends ScreenAdapter implements InputProcessor
         );
         font.draw(
                 batch,
-                Difficulty.HARD.label,
+                Difficulty.HARD.getLabel(),
                 btnHard.x + btnHard.width / 2,
                 btnHard.y + btnHard.height / 2,
                 0,
@@ -145,7 +145,7 @@ public class StartScreen extends ScreenAdapter implements InputProcessor
         );
         font.draw(
                 batch,
-                Difficulty.INSANE.label,
+                Difficulty.INSANE.getLabel(),
                 btnInsane.x + btnInsane.width / 2,
                 btnInsane.y + btnInsane.height / 2,
                 0,

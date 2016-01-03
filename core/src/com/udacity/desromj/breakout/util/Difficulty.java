@@ -10,13 +10,13 @@ public enum Difficulty
     HARD(1.25f, 7, 1.25f, "Storm", 3, 3, 10000),
     INSANE(1.5f, 9, 1.5f, "Hurricane", 2, 3, 15000);
 
-    public float scoreMultiplier;
-    public int rowsOfBlocks;
-    public float speedMultiplier;
-    public String label;
-    public int timeLimitInMinutes;
-    public int numLives;
-    public int clearBonus;
+    private float scoreMultiplier;
+    private int rowsOfBlocks;
+    private float speedMultiplier;
+    private String label;
+    private int timeLimitInMinutes;
+    private int numLives;
+    private int clearBonus;
 
     private Difficulty(float scoreMultiplier, int rowsOfBlocks, float speedMultiplier,
                        String label, int timeLimitInMinutes, int numLives, int clearBonus)
@@ -37,5 +37,33 @@ public enum Difficulty
                 return diff;
 
         return Difficulty.MEDIUM;
+    }
+
+    public float getScoreMultiplier() {
+        return scoreMultiplier;
+    }
+
+    public int getRowsOfBlocks() {
+        return rowsOfBlocks;
+    }
+
+    public float getSpeedMultiplier() {
+        return speedMultiplier;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public int getTimeLimitInMinutes() {
+        return timeLimitInMinutes;
+    }
+
+    public int getNumLives() {
+        return numLives;
+    }
+
+    public int getClearBonus() {
+        return clearBonus;
     }
 }

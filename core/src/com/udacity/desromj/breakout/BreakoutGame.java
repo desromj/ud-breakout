@@ -10,12 +10,12 @@ import com.udacity.desromj.breakout.util.Difficulty;
 
 public class BreakoutGame extends Game
 {
-    public Score score;
+    /** Keep the same score for the duration of the game - reset on new game start */
+    public static final Score score = new Score();
 
 	@Override
 	public void create ()
     {
-        score = new Score();
 		showStartScreen();
 	}
 

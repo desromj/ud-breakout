@@ -35,10 +35,10 @@ public class Platform
     {
         // Keyboard Controls
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            position.x -= Constants.PLATFORM_MAX_SPEED * delta * difficulty.speedMultiplier;
+            position.x -= Constants.PLATFORM_MAX_SPEED * delta * difficulty.getSpeedMultiplier();
             lastDirection = DirectionMoved.LEFT;
         } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            position.x += Constants.PLATFORM_MAX_SPEED * delta * difficulty.speedMultiplier;
+            position.x += Constants.PLATFORM_MAX_SPEED * delta * difficulty.getSpeedMultiplier();
             lastDirection = DirectionMoved.RIGHT;
         }
 

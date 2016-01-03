@@ -51,7 +51,7 @@ public class BreakoutScreen extends ScreenAdapter
     {
         this.game = game;
         this.difficulty = difficulty;
-        this.numLives = difficulty.numLives;
+        this.numLives = difficulty.getNumLives();
         this.timeStarted = TimeUtils.nanoTime();
     }
 
@@ -129,7 +129,7 @@ public class BreakoutScreen extends ScreenAdapter
 
         // Check the time remaining in the game due to difficulty
         float elapsedTime = MathUtils.nanoToSec * (TimeUtils.nanoTime() - timeStarted);
-        float timeLeft = difficulty.timeLimitInMinutes * 60 - elapsedTime;
+        float timeLeft = difficulty.getTimeLimitInMinutes() * 60 - elapsedTime;
 
         // End the game if our time is too long. Otherwise, proceed to display it
         if (timeLeft < 0.0f)
@@ -214,7 +214,7 @@ public class BreakoutScreen extends ScreenAdapter
     private void endGame(boolean win)
     {
         if (win) {
-            game.score.addScore(difficulty.clearBonus);
+            game.score.addScore(difficulty.getClearBonus());
             game.showWinScreen();
         } else {
             game.showGameOverScreen();

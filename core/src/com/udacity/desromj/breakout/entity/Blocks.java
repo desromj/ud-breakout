@@ -26,7 +26,7 @@ public class Blocks
         blocks.clear();
 
         // create the 2-D array of blocks to populate the screen
-        for (int i = 0; i < difficulty.rowsOfBlocks; i++)
+        for (int i = 0; i < difficulty.getRowsOfBlocks(); i++)
         {
             for (int j = 0; j < Constants.BLOCKS_PER_ROW; j++)
             {

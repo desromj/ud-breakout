@@ -164,8 +164,8 @@ public class Ball extends InputAdapter
     public void launch(Vector2 target)
     {
         moveState = MoveState.MOVING;
-        velocity.x = target.nor().x * Constants.BALL_SPEED * difficulty.speedMultiplier;
-        velocity.y = target.nor().y * Constants.BALL_SPEED * difficulty.speedMultiplier;
+        velocity.x = target.nor().x * Constants.BALL_SPEED * difficulty.getSpeedMultiplier();
+        velocity.y = target.nor().y * Constants.BALL_SPEED * difficulty.getSpeedMultiplier();
     }
 
     @Override
