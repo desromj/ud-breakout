@@ -30,10 +30,10 @@ of lives
 
 Scoring
 =======
-Green Blocks =    100 points
-Yellow Blocks =   200 points
-Blue Blocks =     350 points
-Red Blocks =      500 points
+  - Green Blocks =    100 points
+  - Yellow Blocks =   200 points
+  - Blue Blocks =     350 points
+  - Red Blocks =      500 points
 
 Combo Scoring
 =============
