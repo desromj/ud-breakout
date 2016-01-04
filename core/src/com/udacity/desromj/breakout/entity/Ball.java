@@ -23,7 +23,7 @@ public class Ball extends InputAdapter
     MoveState moveState;
     Difficulty difficulty;
 
-    public boolean isOffScreen;
+    boolean isOffScreen;
 
     Viewport viewport;
 
@@ -199,6 +199,10 @@ public class Ball extends InputAdapter
             launch(diff);
 
         return true;
+    }
+
+    public boolean isOffScreen() {
+        return isOffScreen;
     }
 
     public enum MoveState

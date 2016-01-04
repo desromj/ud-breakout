@@ -88,12 +88,12 @@ public class BreakoutScreen extends ScreenAdapter
         ball.update(delta);
 
         // Check if we win
-        if (blocks.blocks.size <= 0)
+        if (!blocks.hasBlocksRemaining())
             endGame(true);
 
         // Otherwise, continue with updates
         checkBallIsOnScreen();
-        checkBallCollisionWithBlocks();
+        blocks.checkCollision(ball, game);
 
         // Clear the screen to white - will be drawing a custom rectangle colour blend
         Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -177,30 +177,9 @@ public class BreakoutScreen extends ScreenAdapter
         spriteBatch.end();
     }
 
-    /**
-     * Loops through all blocks onScreen and checks if the ball is colliding with them.
-     * If it is, determines whether or not to bounce the ball along the X or Y axis
-     *
-     * This will probably be moved to the Blocks class when it gets written
-      */
-    private void checkBallCollisionWithBlocks()
-    {
-        for (int i = 0; i < blocks.blocks.size; i++) {
-            Block block = blocks.blocks.get(i);
-
-            if (ball.isColliding(block))
-            {
-                ball.bounceOffBlock(block);
-                game.score.addScore(block);
-
-                blocks.blocks.removeIndex(i);
-            }
-        }
-    }
-
     private void checkBallIsOnScreen()
     {
-        if (ball.isOffScreen)
+        if (ball.isOffScreen())
         {
             if (--numLives <= 0) {
                 endGame(false);

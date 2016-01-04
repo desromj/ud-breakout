@@ -1,8 +1,10 @@
 package com.udacity.desromj.breakout.entity;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
+import com.udacity.desromj.breakout.BreakoutGame;
 import com.udacity.desromj.breakout.util.Constants;
 import com.udacity.desromj.breakout.util.Difficulty;
 
@@ -11,7 +13,7 @@ import com.udacity.desromj.breakout.util.Difficulty;
  */
 public class Blocks
 {
-    public DelayedRemovalArray<Block> blocks;
+    DelayedRemovalArray<Block> blocks;
     Difficulty difficulty;
 
     public Blocks(Difficulty difficulty)
@@ -36,6 +38,25 @@ public class Blocks
                 );
 
                 blocks.add(new Block(newPos));
+            }
+        }
+    }
+
+    /**
+     * Loops through all blocks onScreen and checks if the ball is colliding with them.
+     * If it is, determines whether or not to bounce the ball along the X or Y axis
+     */
+    public void checkCollision(Ball ball, BreakoutGame game)
+    {
+        for (int i = 0; i < blocks.size; i++) {
+            Block block = blocks.get(i);
+
+            if (ball.isColliding(block))
+            {
+                ball.bounceOffBlock(block);
+                game.score.addScore(block);
+
+                blocks.removeIndex(i);
             }
         }
     }
