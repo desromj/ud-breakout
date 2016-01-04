@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.udacity.desromj.breakout.BreakoutGame;
 import com.udacity.desromj.breakout.entity.Score;
@@ -31,7 +32,7 @@ public class GameOverScreen extends ScreenAdapter implements InputProcessor
     public GameOverScreen(BreakoutGame game)
     {
         this.game = game;
-        viewport = new ExtendViewport(Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
+        viewport = new FitViewport(Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
     }
 
     @Override

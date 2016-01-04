@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.udacity.desromj.breakout.BreakoutGame;
 import com.udacity.desromj.breakout.entity.Ball;
@@ -59,7 +60,7 @@ public class BreakoutScreen extends ScreenAdapter
     public void show()
     {
         renderer = new ShapeRenderer();
-        viewport = new ExtendViewport(Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
+        viewport = new FitViewport(Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
         platform = new Platform(difficulty);
         ball = new Ball(platform, viewport, difficulty);
         blocks = new Blocks(difficulty);
