@@ -54,7 +54,7 @@ public class Blocks
             if (ball.isColliding(block))
             {
                 ball.bounceOffBlock(block);
-                game.score.addScore(block);
+                game.score.addScore(block, difficulty);
 
                 blocks.removeIndex(i);
             }

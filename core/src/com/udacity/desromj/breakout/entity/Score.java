@@ -1,6 +1,7 @@
 package com.udacity.desromj.breakout.entity;
 
 import com.badlogic.gdx.graphics.Color;
+import com.udacity.desromj.breakout.util.Difficulty;
 
 /**
  * Created by Quiv on 2015-12-27.
@@ -28,12 +29,13 @@ public class Score
     }
 
     /**
-     * Adds the score of the destroyed block to the current score, and returns a String
-     * which can be displayed in a user-firendly manner (350x2)
+     * Adds the score of the destroyed block to the current score
+     *
+     * Raw scores are multiplied by the difficulty the game is being played at
+     *
      * @param block
-     * @return
      */
-    public String addScore(Block block)
+    public void addScore(Block block, Difficulty difficulty)
     {
         if (block.blockType.color == lastColorDestroyed)
         {
@@ -45,12 +47,15 @@ public class Score
             currentCombo = 1;
         }
 
-        int addScore = block.blockType.pointValue * currentCombo;
+        int addScore = (int) (block.blockType.pointValue * currentCombo * difficulty.getScoreMultiplier());
         addScore(addScore);
-
-        return String.valueOf(addScore) + ((currentCombo > 1) ? " x " + currentCombo : "");
     }
 
+    /**
+     * Adds the passed score to this score object. Does NOT use difficulty modifiers
+     *
+     * @param points
+     */
     public void addScore(int points)
     {
         score += points;
