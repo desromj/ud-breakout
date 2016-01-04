@@ -37,6 +37,12 @@ Scoring
   - Blue Blocks =     350 points
   - Red Blocks =      500 points
 
+Based on the difficulty, these point values are modified:
+  - Easy (Breeze):        0.75x
+  - Medium (Gust):        1.00x
+  - Hard (Storm):         1.25x
+  - Insane (Hurricane):   1.50x
+
 Combo Scoring
 =============
 Every block you hit increments your combo counter by 1 for that colour. If you 
