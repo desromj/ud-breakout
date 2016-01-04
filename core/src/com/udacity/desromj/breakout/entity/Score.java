@@ -7,14 +7,12 @@ import com.badlogic.gdx.graphics.Color;
  */
 public class Score
 {
-    public int score;
-    public int topScore;
+    int score;
+    int topScore;
 
     // Used for tracking the combo scoring
-    public Color lastColorDestroyed;
-    public int currentCombo;
-
-    // Fonts for drawing the score to the screen
+    Color lastColorDestroyed;
+    int currentCombo;
 
     public Score()
     {
@@ -61,6 +59,11 @@ public class Score
             topScore = score;
     }
 
+    public void resetCombo()
+    {
+        this.currentCombo = 0;
+    }
+
     public String getLastComboLabel()
     {
         if (lastColorDestroyed == Color.YELLOW) return "Yellow";
@@ -70,4 +73,21 @@ public class Score
 
         return "None";
     }
+
+    public int getScore() {
+        return score;
+    }
+
+    public int getTopScore() {
+        return topScore;
+    }
+
+    public Color getLastColorDestroyed() {
+        return lastColorDestroyed;
+    }
+
+    public int getCurrentCombo() {
+        return currentCombo;
+    }
+
 }

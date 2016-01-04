@@ -61,7 +61,7 @@ public class GameOverScreen extends ScreenAdapter implements InputProcessor
         batch.setProjectionMatrix(viewport.getCamera().combined);
         batch.begin();
 
-        if (game.score.score >= game.score.topScore)
+        if (game.score.getScore() >= game.score.getTopScore())
         {
             font.getData().setScale(Constants.TOP_SCORE_FONT_SCALE);
             font.setColor(Constants.TOP_SCORE_TEXT_COLOR);
@@ -80,7 +80,7 @@ public class GameOverScreen extends ScreenAdapter implements InputProcessor
         font.setColor(Constants.LOSE_TEXT_COLOR);
         font.draw(
                 batch,
-                "You Lose!!!\nYour Score: " + game.score.score + "\nTop Score: " + game.score.topScore +
+                "You Lose!!!\nYour Score: " + game.score.getScore() + "\nTop Score: " + game.score.getTopScore() +
                     "\n\nTouch the Screen to play again!",
                 Constants.WORLD_WIDTH / 2,
                 Constants.WORLD_HEIGHT / 2,

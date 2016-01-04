@@ -153,8 +153,8 @@ public class BreakoutScreen extends ScreenAdapter
         // Draw the rest of the GUI
         font.draw(
                 spriteBatch,
-                "Score: " + game.score.score + "\n" +
-                        "Top Score: " + game.score.topScore,
+                "Score: " + game.score.getScore() + "\n" +
+                        "Top Score: " + game.score.getTopScore(),
                 Constants.TEXT_MARGIN,
                 Constants.WORLD_HEIGHT - Constants.TEXT_MARGIN,
                 0,
@@ -165,7 +165,7 @@ public class BreakoutScreen extends ScreenAdapter
         font.draw(
                 spriteBatch,
                 "Lives: " + numLives + "\n" +
-                        "Current Combo: " + game.score.currentCombo + "\n" +
+                        "Current Combo: " + game.score.getCurrentCombo() + "\n" +
                         "Combo Color: " + game.score.getLastComboLabel(),
                 Constants.WORLD_WIDTH - Constants.TEXT_MARGIN,
                 Constants.WORLD_HEIGHT - Constants.TEXT_MARGIN,
@@ -185,7 +185,7 @@ public class BreakoutScreen extends ScreenAdapter
                 endGame(false);
             } else {
                 ball.init();
-                game.score.currentCombo = 0;
+                game.score.resetCombo();
             }
         }
     }
