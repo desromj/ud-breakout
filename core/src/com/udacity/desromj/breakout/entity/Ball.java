@@ -118,6 +118,7 @@ public class Ball extends InputAdapter
                 block.position.x - this.position.x
         ) * 180.0f / Math.PI);
 
+        // Get the angle simplified to within 180 degrees
         hitAngle = Math.abs(hitAngle % 180.0f);
 
         Gdx.app.debug(TAG, "Hit Angle: " + hitAngle);
