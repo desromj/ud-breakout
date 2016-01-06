@@ -81,7 +81,13 @@ public class Ball extends InputAdapter
         if (moveState == MoveState.MOVING && velocity.y <= 0 && launchPlatform.hitRect.contains(position))
         {
             Vector2 angle = new Vector2(position.x - launchPlatform.position.x, position.y - launchPlatform.position.y);
-            launch(angle);
+
+            // Only launch if we hit at the minimum allowed angle - to prevent 179.99 degree hits which take 5 minutes just to climb the screen
+            float degrees = (float) (Math.atan2(angle.y, angle.x) * 180.0f / Math.PI);
+            degrees %= 180.0f;
+
+            if (degrees > Constants.MINIMUM_HIT_ANGLE_DEGREES && degrees <= 180.0f - Constants.MINIMUM_HIT_ANGLE_DEGREES)
+                launch(angle);
         }
     }
 
@@ -123,7 +129,7 @@ public class Ball extends InputAdapter
 
         Gdx.app.debug(TAG, "Hit Angle: " + hitAngle);
 
-        // if Bounce angle is 45 degrees, bounce Y when between 45-135. Bounce x between 0-45 and 135-180
+        // if Bounce angle is 45 degrees, bounce Y when between 45-135. Bounce X between 0-45 and 135-180
         if (hitAngle < Constants.BOUNCE_ANGLE_DEGREES || hitAngle > 180.0f - Constants.BOUNCE_ANGLE_DEGREES)
             bounceX();
         else
