@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -58,6 +59,7 @@ public class BreakoutScreen extends ScreenAdapter implements InputProcessor
         this.difficulty = difficulty;
         this.numLives = difficulty.getNumLives();
         this.timeStarted = TimeUtils.nanoTime();
+        this.balls = new DelayedRemovalArray<Ball>();
     }
 
     @Override
