@@ -56,9 +56,18 @@ public class Constants
     public static final float GAME_FINISHED_FONT_SCALE = 2.5f;
     public static final float TITLE_FONT_SCALE = 4.0f;
     public static final float INGAME_FONT_SCALE = 1.0f;
+    public static final float POWERUP_FONT_SCALE = 0.6f;
 
     public static final float BOUNCE_ANGLE_DEGREES = (float) Math.abs((Math.atan2(BLOCK_HEIGHT + BALL_RADIUS, BLOCK_WIDTH + BALL_RADIUS) * 180.0f / Math.PI));
     public static final float MINIMUM_HIT_ANGLE_DEGREES = 15.0f;
+
+    public static final float POWERUP_FALL_SPEED = 120.0f;
+    public static final float POWERUP_RADIUS = 8.0f;
+    public static final float POWERUP_MARGIN = 1.0f;
+    public static final Color POWERUP_SECONDARY_COLOR = Color.WHITE;
+
+    public static final Color POWERUP_MULTIBALL_COLOR = Color.RED;
+    public static final String POWERUP_MULTIBALL_LETTER = "M";
 
 
 
