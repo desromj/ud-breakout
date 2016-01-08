@@ -15,14 +15,13 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.udacity.desromj.breakout.BreakoutGame;
 import com.udacity.desromj.breakout.entity.Ball;
-import com.udacity.desromj.breakout.entity.Block;
 import com.udacity.desromj.breakout.entity.Blocks;
 import com.udacity.desromj.breakout.entity.Platform;
+import com.udacity.desromj.breakout.entity.Powerup;
 import com.udacity.desromj.breakout.util.Constants;
 import com.udacity.desromj.breakout.util.Difficulty;
 
@@ -41,12 +40,13 @@ public class BreakoutScreen extends ScreenAdapter implements InputProcessor
     Array<Ball> balls;
     Difficulty difficulty;
     Blocks blocks;
+    Array<Powerup> powerups;
 
     // Other game-specific variables
     int numLives;
     Long timeStarted;
 
-    SpriteBatch spriteBatch;
+    SpriteBatch batch;
     BitmapFont font;
 
     /**
@@ -60,6 +60,7 @@ public class BreakoutScreen extends ScreenAdapter implements InputProcessor
         this.numLives = difficulty.getNumLives();
         this.timeStarted = TimeUtils.nanoTime();
         this.balls = new DelayedRemovalArray<Ball>();
+        this.powerups = new DelayedRemovalArray<Powerup>();
     }
 
     @Override
@@ -73,7 +74,7 @@ public class BreakoutScreen extends ScreenAdapter implements InputProcessor
 
         Gdx.input.setInputProcessor(this);
 
-        spriteBatch = new SpriteBatch();
+        batch = new SpriteBatch();
         font = new BitmapFont();
         font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
     }
@@ -96,6 +97,27 @@ public class BreakoutScreen extends ScreenAdapter implements InputProcessor
         for (Ball ball: balls)
             ball.update(delta);
 
+        for (int i = 0; i < powerups.size; i++)
+        {
+            Powerup pu = powerups.get(i);
+            pu.update(delta);
+
+            // Remove powerups off the bottom of the screen
+            if (pu.getPosition().y <= 0.0f - Constants.POWERUP_RADIUS)
+                powerups.removeIndex(i);
+
+            // Remove powerups which were activated but have outlived their lifeTime
+            if (pu.isAlive() && !pu.isInEffect())
+                powerups.removeIndex(i);
+        }
+
+        // Check powerup collision with paddle, and activate
+        for (Powerup pu: powerups) {
+            if (platform.getHitRectangle().contains(pu.getPosition())) {
+                pu.activate(this);
+            }
+        }
+
         // Check if we win
         if (!blocks.hasBlocksRemaining())
             endGame(true);
@@ -104,7 +126,7 @@ public class BreakoutScreen extends ScreenAdapter implements InputProcessor
         checkBallIsOnScreen();
 
         for (Ball ball: balls)
-            blocks.checkCollision(ball, game);
+            blocks.checkCollision(ball, game, this);
 
         // Clear the screen to white - will be drawing a custom rectangle colour blend
         Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -132,12 +154,23 @@ public class BreakoutScreen extends ScreenAdapter implements InputProcessor
 
         blocks.render(renderer);
 
+        for (Powerup pu: powerups)
+            pu.renderShapes(renderer);
+
         renderer.end();
 
         // Start text and sprite rendering
-        spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
-        spriteBatch.begin();
+        batch.setProjectionMatrix(viewport.getCamera().combined);
+        batch.begin();
 
+        // Game Element sprites
+        font.getData().setScale(Constants.POWERUP_FONT_SCALE);
+        font.setColor(Constants.POWERUP_SECONDARY_COLOR);
+
+        for (Powerup pu: powerups)
+            pu.renderSprites(batch);
+
+        // GUI Sprites
         font.getData().setScale(Constants.INGAME_FONT_SCALE);
         font.setColor(Constants.TEXT_COLOR);
 
@@ -155,7 +188,7 @@ public class BreakoutScreen extends ScreenAdapter implements InputProcessor
         String secondsPrintable = (String.valueOf(secondsLeft).length() == 1) ? "0" + secondsLeft : String.valueOf(secondsLeft);
 
         font.draw(
-                spriteBatch,
+                batch,
                 "Time Remaining: " + minutesLeft + ":" + secondsPrintable,
                 Constants.WORLD_WIDTH / 2,
                 Constants.WORLD_HEIGHT - Constants.TEXT_MARGIN,
@@ -166,7 +199,7 @@ public class BreakoutScreen extends ScreenAdapter implements InputProcessor
 
         // Draw the rest of the GUI
         font.draw(
-                spriteBatch,
+                batch,
                 "Score: " + game.score.getScore() + "\n" +
                         "Top Score: " + game.score.getTopScore(),
                 Constants.TEXT_MARGIN,
@@ -177,7 +210,7 @@ public class BreakoutScreen extends ScreenAdapter implements InputProcessor
         );
 
         font.draw(
-                spriteBatch,
+                batch,
                 "Lives: " + numLives + "\n" +
                         "Current Combo: " + game.score.getCurrentCombo() + "\n" +
                         "Combo Color: " + game.score.getLastComboLabel(),
@@ -188,7 +221,7 @@ public class BreakoutScreen extends ScreenAdapter implements InputProcessor
                 false
         );
 
-        spriteBatch.end();
+        batch.end();
     }
 
     private void checkBallIsOnScreen()
@@ -211,6 +244,15 @@ public class BreakoutScreen extends ScreenAdapter implements InputProcessor
     {
         balls.clear();
         balls.add(new Ball(platform, viewport, difficulty));
+        
+        powerups.clear();
+    }
+
+    public void spawnRandomPowerup(Vector2 position)
+    {
+        // Spawn a new random powerup at the passed position
+        Powerup powerup = Powerup.makeRandomPowerup(position);
+        powerups.add(powerup);
     }
 
     private void endGame(boolean win)
@@ -234,7 +276,7 @@ public class BreakoutScreen extends ScreenAdapter implements InputProcessor
     public void dispose()
     {
         renderer.dispose();
-        spriteBatch.dispose();
+        batch.dispose();
         font.dispose();
     }
 

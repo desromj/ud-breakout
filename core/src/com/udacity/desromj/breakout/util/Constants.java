@@ -61,6 +61,7 @@ public class Constants
     public static final float BOUNCE_ANGLE_DEGREES = (float) Math.abs((Math.atan2(BLOCK_HEIGHT + BALL_RADIUS, BLOCK_WIDTH + BALL_RADIUS) * 180.0f / Math.PI));
     public static final float MINIMUM_HIT_ANGLE_DEGREES = 15.0f;
 
+    public static final float POWERUP_SPAWN_PERCENT = 50.0f;
     public static final float POWERUP_FALL_SPEED = 120.0f;
     public static final float POWERUP_RADIUS = 8.0f;
     public static final float POWERUP_MARGIN = 1.0f;

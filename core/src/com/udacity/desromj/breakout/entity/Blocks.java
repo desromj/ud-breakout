@@ -5,8 +5,11 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.udacity.desromj.breakout.BreakoutGame;
+import com.udacity.desromj.breakout.screen.BreakoutScreen;
 import com.udacity.desromj.breakout.util.Constants;
 import com.udacity.desromj.breakout.util.Difficulty;
+
+import java.util.Random;
 
 /**
  * Created by Quiv on 2015-12-27.
@@ -46,7 +49,7 @@ public class Blocks
      * Loops through all blocks onScreen and checks if the ball is colliding with them.
      * If it is, determines whether or not to bounce the ball along the X or Y axis
      */
-    public void checkCollision(Ball ball, BreakoutGame game)
+    public void checkCollision(Ball ball, BreakoutGame game, BreakoutScreen screen)
     {
         for (int i = 0; i < blocks.size; i++) {
             Block block = blocks.get(i);
@@ -55,6 +58,9 @@ public class Blocks
             {
                 ball.bounceOffBlock(block);
                 game.score.addScore(block, difficulty);
+
+                if (new Random().nextFloat() <= Constants.POWERUP_SPAWN_PERCENT / 100.0f)
+                    screen.spawnRandomPowerup(block.position);
 
                 blocks.removeIndex(i);
             }

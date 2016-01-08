@@ -1,6 +1,7 @@
 package com.udacity.desromj.breakout.entity.powerup;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector2;
 import com.udacity.desromj.breakout.entity.Block;
 import com.udacity.desromj.breakout.entity.Powerup;
 import com.udacity.desromj.breakout.screen.BreakoutScreen;
@@ -11,9 +12,9 @@ import com.udacity.desromj.breakout.util.Constants;
  */
 public class MultiBallPowerup extends Powerup
 {
-    public MultiBallPowerup(Block block, float lifeTime)
+    public MultiBallPowerup(Vector2 position, float lifeTime)
     {
-        super(block, Constants.POWERUP_MULTIBALL_COLOR, Constants.POWERUP_MULTIBALL_LETTER, lifeTime);
+        super(position, Constants.POWERUP_MULTIBALL_COLOR, Constants.POWERUP_MULTIBALL_LETTER, lifeTime);
     }
 
     @Override
@@ -23,8 +24,9 @@ public class MultiBallPowerup extends Powerup
     }
 
     @Override
-    public void activate(BreakoutScreen screen)
+    protected void doActivationEffects(BreakoutScreen screen)
     {
         // TODO: Split all balls onscreen into two balls and change the angle they are moving by about 10 degrees each
+
     }
 }

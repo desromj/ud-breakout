@@ -83,6 +83,7 @@ public class Platform
         );
     }
 
+    public Rectangle getHitRectangle() { return this.hitRect; }
     public DirectionMoved getLastDirection()
     {
         return this.lastDirection;
