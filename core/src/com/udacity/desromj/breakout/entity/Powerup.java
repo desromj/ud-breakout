@@ -4,9 +4,12 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.udacity.desromj.breakout.entity.powerup.PowerupType;
+import com.udacity.desromj.breakout.screen.BreakoutScreen;
 import com.udacity.desromj.breakout.util.Constants;
 
 /**
@@ -19,14 +22,18 @@ public abstract class Powerup
     Vector2 position;
     Color color;
     String letter;
+    float lifeTimeInSeconds;
+    float startTime;
 
     BitmapFont font;
 
-    protected Powerup(Block block, Color color, String letter)
+    protected Powerup(Block block, Color color, String letter, float lifeTimeInSeconds)
     {
         this.position = new Vector2(block.position.x, block.position.y);
         this.color = color;
         this.letter = letter;
+        this.lifeTimeInSeconds = lifeTimeInSeconds;
+        this.startTime = TimeUtils.nanoTime();
 
         font = new BitmapFont();
         font.getData().setScale(Constants.POWERUP_FONT_SCALE);
@@ -36,7 +43,13 @@ public abstract class Powerup
     /**
      * Set the protected field 'type' to the appropriate PowerupType enum
      */
-    public abstract void setPowerupType();
+    protected abstract void setPowerupType();
+    public abstract void activate(BreakoutScreen screen);
+
+    public final boolean stillAlive()
+    {
+        return MathUtils.nanoToSec * (TimeUtils.nanoTime() - startTime) > this.lifeTimeInSeconds;
+    }
 
     public final void update(float delta)
     {
