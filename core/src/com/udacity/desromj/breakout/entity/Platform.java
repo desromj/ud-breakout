@@ -83,6 +83,11 @@ public class Platform
         );
     }
 
+    public DirectionMoved getLastDirection()
+    {
+        return this.lastDirection;
+    }
+
     public enum DirectionMoved
     {
         LEFT,

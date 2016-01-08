@@ -1,6 +1,8 @@
 package com.udacity.desromj.breakout.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -8,7 +10,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -24,7 +28,7 @@ import com.udacity.desromj.breakout.util.Difficulty;
 /**
  * Created by Quiv on 2015-12-27.
  */
-public class BreakoutScreen extends ScreenAdapter
+public class BreakoutScreen extends ScreenAdapter implements InputProcessor
 {
     BreakoutGame game;
 
@@ -33,7 +37,7 @@ public class BreakoutScreen extends ScreenAdapter
 
     // Gameplay Objects which need to be updated and rendered
     Platform platform;
-    Ball ball;
+    Array<Ball> balls;
     Difficulty difficulty;
     Blocks blocks;
 
@@ -62,10 +66,10 @@ public class BreakoutScreen extends ScreenAdapter
         renderer = new ShapeRenderer();
         viewport = new FitViewport(Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
         platform = new Platform(difficulty);
-        ball = new Ball(platform, viewport, difficulty);
+        initFirstBall();
         blocks = new Blocks(difficulty);
 
-        Gdx.input.setInputProcessor(ball);
+        Gdx.input.setInputProcessor(this);
 
         spriteBatch = new SpriteBatch();
         font = new BitmapFont();
@@ -86,7 +90,9 @@ public class BreakoutScreen extends ScreenAdapter
 
         // Perform entity updates
         platform.update(delta);
-        ball.update(delta);
+
+        for (Ball ball: balls)
+            ball.update(delta);
 
         // Check if we win
         if (!blocks.hasBlocksRemaining())
@@ -94,7 +100,9 @@ public class BreakoutScreen extends ScreenAdapter
 
         // Otherwise, continue with updates
         checkBallIsOnScreen();
-        blocks.checkCollision(ball, game);
+
+        for (Ball ball: balls)
+            blocks.checkCollision(ball, game);
 
         // Clear the screen to white - will be drawing a custom rectangle colour blend
         Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -116,7 +124,10 @@ public class BreakoutScreen extends ScreenAdapter
 
         // Render evey other game object that requires it
         platform.render(renderer);
-        ball.render(renderer);
+
+        for (Ball ball: balls)
+            ball.render(renderer);
+
         blocks.render(renderer);
 
         renderer.end();
@@ -180,15 +191,24 @@ public class BreakoutScreen extends ScreenAdapter
 
     private void checkBallIsOnScreen()
     {
-        if (ball.isOffScreen())
+        for (int i = 0; i < balls.size; i++)
+            if (balls.get(i).isOffScreen())
+                balls.removeIndex(i);
+
+        if (balls.size <= 0)
         {
-            if (--numLives <= 0) {
+            initFirstBall();
+            game.score.resetCombo();
+
+            if (--numLives <= 0)
                 endGame(false);
-            } else {
-                ball.init();
-                game.score.resetCombo();
-            }
         }
+    }
+
+    private void initFirstBall()
+    {
+        balls.clear();
+        balls.add(new Ball(platform, viewport, difficulty));
     }
 
     private void endGame(boolean win)
@@ -214,5 +234,77 @@ public class BreakoutScreen extends ScreenAdapter
         renderer.dispose();
         spriteBatch.dispose();
         font.dispose();
+    }
+
+    /*
+        InputProcessor methods
+     */
+
+    @Override
+    public boolean keyDown(int keycode)
+    {
+        for (Ball ball: balls) {
+            if (ball.getMoveState() == Ball.MoveState.MOVING)
+                continue;
+
+            if (keycode == Input.Keys.SPACE) {
+                ball.launch(
+                        new Vector2(
+                                (platform.getLastDirection() == Platform.DirectionMoved.RIGHT) ? 1 : -1,
+                                1));
+            }
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button)
+    {
+        for (Ball ball: balls)
+        {
+            if (ball.getMoveState() == Ball.MoveState.MOVING)
+                continue;
+
+            // allow launching the ball through touch controls
+            Vector2 touchPos = viewport.unproject(new Vector2(screenX, screenY));
+            Vector2 diff = touchPos.sub(ball.getPosition());
+
+            // Y value must ve positive to respond to the event
+            if (diff.y > 0)
+                ball.launch(diff);
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        return false;
     }
 }

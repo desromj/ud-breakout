@@ -14,7 +14,7 @@ import com.udacity.desromj.breakout.util.Difficulty;
 /**
  * Created by Quiv on 2015-12-27.
  */
-public class Ball extends InputAdapter
+public class Ball
 {
     public static final String TAG = Ball.class.getName();
 
@@ -175,37 +175,14 @@ public class Ball extends InputAdapter
         velocity.y = target.nor().y * Constants.BALL_SPEED * difficulty.getSpeedMultiplier();
     }
 
-    @Override
-    public boolean keyDown(int keycode)
+    public Vector2 getPosition()
     {
-        if (moveState == MoveState.MOVING)
-            return true;
-
-        if (keycode == Input.Keys.SPACE) {
-            launch(
-                    new Vector2(
-                            (launchPlatform.lastDirection == Platform.DirectionMoved.RIGHT) ? 1 : -1,
-                            1));
-        }
-
-        return true;
+        return this.getPosition();
     }
 
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button)
+    public MoveState getMoveState()
     {
-        if (moveState == MoveState.MOVING)
-            return true;
-
-        // allow launching the ball through touch controls
-        Vector2 touchPos = viewport.unproject(new Vector2(screenX, screenY));
-        Vector2 diff = touchPos.sub(position);
-
-        // Y value must ve positive to respond to the event
-        if (diff.y > 0)
-            launch(diff);
-
-        return true;
+        return this.moveState;
     }
 
     public boolean isOffScreen() {
