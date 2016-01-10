@@ -280,6 +280,26 @@ public class BreakoutScreen extends ScreenAdapter implements InputProcessor
         font.dispose();
     }
 
+    public Array<Ball> getBalls()
+    {
+        return this.balls;
+    }
+
+    public Platform getLaunchPlatform()
+    {
+        return platform;
+    }
+
+    public Viewport getViewport()
+    {
+        return viewport;
+    }
+
+    public Difficulty getDifficulty()
+    {
+        return difficulty;
+    }
+
     /*
         InputProcessor methods
      */

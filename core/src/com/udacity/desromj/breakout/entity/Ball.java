@@ -175,9 +175,24 @@ public class Ball
         velocity.y = target.nor().y * Constants.BALL_SPEED * difficulty.getSpeedMultiplier();
     }
 
-    public Vector2 getPosition()
+    public Vector2 getPosition() { return this.position; }
+    public Vector2 getVelocity() { return this.velocity; }
+
+    public void setVelocity(Vector2 newVel)
     {
-        return this.getPosition();
+        velocity.x = newVel.nor().x * Constants.BALL_SPEED * difficulty.getSpeedMultiplier();;
+        velocity.y = newVel.nor().y * Constants.BALL_SPEED * difficulty.getSpeedMultiplier();;
+    }
+
+    public void setPosition(Vector2 newPos)
+    {
+        this.position.x = newPos.x;
+        this.position.y = newPos.y;
+    }
+
+    public void setMoveState(MoveState newState)
+    {
+        this.moveState = newState;
     }
 
     public MoveState getMoveState()

@@ -99,7 +99,7 @@ public abstract class Powerup
         switch (PowerupType.values()[idx])
         {
             case MULTIBALL:
-                return new MultiBallPowerup(new Vector2(position.x, position.y), 0.0f);
+                return new MultiBallPowerup(new Vector2(position.x, position.y), 0.1f);
 
             default:
                 throw new UnsupportedOperationException();

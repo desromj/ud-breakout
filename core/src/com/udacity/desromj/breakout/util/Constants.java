@@ -70,6 +70,8 @@ public class Constants
     public static final Color POWERUP_MULTIBALL_COLOR = Color.RED;
     public static final String POWERUP_MULTIBALL_LETTER = "M";
 
+    public static final float MULTIBALL_SPLIT_DEGREES = 15.0f;
+
 
 
 
