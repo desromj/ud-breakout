@@ -28,7 +28,7 @@ public class MultiBallPowerup extends Powerup
     @Override
     protected void doActivationEffects(BreakoutScreen screen)
     {
-        // TODO: Split all balls onscreen into two balls and change the angle they are moving by about 10 degrees each
+        // Split all balls onscreen into two balls and change the angle they are moving by about 10 degrees each
         Array<Ball> balls = screen.getBalls();
         int size = balls.size;
 

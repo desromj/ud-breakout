@@ -87,7 +87,14 @@ public abstract class Powerup
     {
         if (this.alive) return;
 
-        font.draw(batch, letter, position.x, position.y, 0, Align.center, false);
+        font.draw(
+                batch,
+                letter,
+                position.x - Constants.POWERUP_RADIUS / 2,
+                position.y + Constants.POWERUP_RADIUS / 2,
+                0,
+                Align.topLeft,
+                false);
     }
 
 

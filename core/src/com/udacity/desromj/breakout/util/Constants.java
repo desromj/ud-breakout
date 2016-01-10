@@ -25,6 +25,9 @@ public class Constants
     public static final float PLATFORM_MAX_SPEED = 300.0f;
     public static final Color PLATFORM_COLOR = Color.PURPLE;
 
+    // Area within/above the platform within which the ball can be hit (including its radius)
+    public static final float BALL_HIT_ALLOWANCE = 0.02f;
+
     public static final float BALL_RADIUS = 8.0f;
     public static final float BALL_SPEED = 400.0f;
     public static final Color BALL_COLOR = Color.RED;
@@ -36,8 +39,6 @@ public class Constants
     public static final float BLOCK_BORDER_WIDTH = 2.5f;
     public static final float BLOCK_MARGIN_FROM_TOP = 60.0f;
 
-    // Area within/above the platform within which the ball can be hit (including its redius)
-    public static final float BALL_HIT_ALLOWANCE = 0.02f;
 
     /** Platform's height from the bottom of the screen */
     public static final float PLATFORM_BOTTOM_MARGIN = 40.0f;
@@ -56,12 +57,12 @@ public class Constants
     public static final float GAME_FINISHED_FONT_SCALE = 2.5f;
     public static final float TITLE_FONT_SCALE = 4.0f;
     public static final float INGAME_FONT_SCALE = 1.0f;
-    public static final float POWERUP_FONT_SCALE = 0.6f;
+    public static final float POWERUP_FONT_SCALE = 0.8f;
 
     public static final float BOUNCE_ANGLE_DEGREES = (float) Math.abs((Math.atan2(BLOCK_HEIGHT + BALL_RADIUS, BLOCK_WIDTH + BALL_RADIUS) * 180.0f / Math.PI));
     public static final float MINIMUM_HIT_ANGLE_DEGREES = 15.0f;
 
-    public static final float POWERUP_SPAWN_PERCENT = 50.0f;
+    public static final float POWERUP_SPAWN_PERCENT = 12.5f;
     public static final float POWERUP_FALL_SPEED = 120.0f;
     public static final float POWERUP_RADIUS = 8.0f;
     public static final float POWERUP_MARGIN = 1.0f;
@@ -70,7 +71,7 @@ public class Constants
     public static final Color POWERUP_MULTIBALL_COLOR = Color.RED;
     public static final String POWERUP_MULTIBALL_LETTER = "M";
 
-    public static final float MULTIBALL_SPLIT_DEGREES = 15.0f;
+    public static final float MULTIBALL_SPLIT_DEGREES = 12.5f;
 
 
 
