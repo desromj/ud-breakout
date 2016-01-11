@@ -22,6 +22,7 @@ import com.udacity.desromj.breakout.entity.Ball;
 import com.udacity.desromj.breakout.entity.Blocks;
 import com.udacity.desromj.breakout.entity.Platform;
 import com.udacity.desromj.breakout.entity.Powerup;
+import com.udacity.desromj.breakout.entity.Powerups;
 import com.udacity.desromj.breakout.util.Constants;
 import com.udacity.desromj.breakout.util.Difficulty;
 
@@ -40,7 +41,7 @@ public class BreakoutScreen extends ScreenAdapter implements InputProcessor
     Array<Ball> balls;
     Difficulty difficulty;
     Blocks blocks;
-    Array<Powerup> powerups;
+    Powerups powerups;
 
     // Other game-specific variables
     int numLives;
@@ -60,7 +61,7 @@ public class BreakoutScreen extends ScreenAdapter implements InputProcessor
         this.numLives = difficulty.getNumLives();
         this.timeStarted = TimeUtils.nanoTime();
         this.balls = new DelayedRemovalArray<Ball>();
-        this.powerups = new DelayedRemovalArray<Powerup>();
+        this.powerups = new Powerups();
     }
 
     @Override
@@ -97,26 +98,8 @@ public class BreakoutScreen extends ScreenAdapter implements InputProcessor
         for (Ball ball: balls)
             ball.update(delta);
 
-        for (int i = 0; i < powerups.size; i++)
-        {
-            Powerup pu = powerups.get(i);
-            pu.update(delta);
-
-            // Remove powerups off the bottom of the screen
-            if (pu.getPosition().y <= 0.0f - Constants.POWERUP_RADIUS)
-                powerups.removeIndex(i);
-
-            // Remove powerups which were activated but have outlived their lifeTime
-            if (pu.isAlive() && !pu.isInEffect())
-                powerups.removeIndex(i);
-        }
-
-        // Check powerup collision with paddle, and activate
-        for (Powerup pu: powerups) {
-            if (platform.getHitRectangle().contains(pu.getPosition())) {
-                pu.activate(this);
-            }
-        }
+        powerups.update(delta);
+        powerups.checkCollision(platform, this);
 
         // Check if we win
         if (!blocks.hasBlocksRemaining())
@@ -153,9 +136,7 @@ public class BreakoutScreen extends ScreenAdapter implements InputProcessor
             ball.render(renderer);
 
         blocks.render(renderer);
-
-        for (Powerup pu: powerups)
-            pu.renderShapes(renderer);
+        powerups.renderShapes(renderer);
 
         renderer.end();
 
@@ -167,8 +148,7 @@ public class BreakoutScreen extends ScreenAdapter implements InputProcessor
         font.getData().setScale(Constants.POWERUP_FONT_SCALE);
         font.setColor(Constants.POWERUP_SECONDARY_COLOR);
 
-        for (Powerup pu: powerups)
-            pu.renderSprites(batch);
+        powerups.renderSprites(batch);
 
         // GUI Sprites
         font.getData().setScale(Constants.INGAME_FONT_SCALE);
@@ -245,14 +225,12 @@ public class BreakoutScreen extends ScreenAdapter implements InputProcessor
         balls.clear();
         balls.add(new Ball(platform, viewport, difficulty));
         
-        powerups.clear();
+        powerups.init();
     }
 
     public void spawnRandomPowerup(Vector2 position)
     {
-        // Spawn a new random powerup at the passed position
-        Powerup powerup = Powerup.makeRandomPowerup(position);
-        powerups.add(powerup);
+        powerups.addNewRandomPowerup(position);
     }
 
     private void endGame(boolean win)
