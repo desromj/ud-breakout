@@ -23,6 +23,7 @@ import com.udacity.desromj.breakout.entity.Blocks;
 import com.udacity.desromj.breakout.entity.Platform;
 import com.udacity.desromj.breakout.entity.Powerup;
 import com.udacity.desromj.breakout.entity.Powerups;
+import com.udacity.desromj.breakout.entity.powerup.PowerupType;
 import com.udacity.desromj.breakout.util.Constants;
 import com.udacity.desromj.breakout.util.Difficulty;
 
@@ -69,7 +70,7 @@ public class BreakoutScreen extends ScreenAdapter implements InputProcessor
     {
         renderer = new ShapeRenderer();
         viewport = new FitViewport(Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
-        platform = new Platform(difficulty);
+        platform = new Platform(this);
         initFirstBall();
         blocks = new Blocks(difficulty);
 
@@ -241,6 +242,11 @@ public class BreakoutScreen extends ScreenAdapter implements InputProcessor
         } else {
             game.showGameOverScreen();
         }
+    }
+
+    public boolean powerupTypeIsActive(PowerupType type)
+    {
+        return powerups.powerupTypeIsActive(type);
     }
 
     @Override

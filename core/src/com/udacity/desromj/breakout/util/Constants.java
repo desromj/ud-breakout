@@ -70,10 +70,13 @@ public class Constants
 
     public static final Color POWERUP_MULTIBALL_COLOR = Color.RED;
     public static final String POWERUP_MULTIBALL_LETTER = "M";
+    public static final float POWERUP_MULTIBALL_SPLIT_DEGREES = 12.5f;
+    public static final float POWERUP_MULTIBALL_LIFETIME = 0.1f;
 
-    public static final float MULTIBALL_SPLIT_DEGREES = 12.5f;
-
-
+    public static final Color POWERUP_WIDER_PADDLE_COLOR = Color.YELLOW;
+    public static final String POWERUP_WIDER_PADDLE_LETTER = "W";
+    public static final float POWERUP_WIDER_PADDLE_WIDTH_MODIFIER = 2.0f;
+    public static final float POWERUP_WIDER_PADDLE_LIFETIME = 10.0f;
 
 
     private Constants() {}

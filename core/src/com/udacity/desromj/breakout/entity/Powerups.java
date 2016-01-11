@@ -1,5 +1,6 @@
 package com.udacity.desromj.breakout.entity;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -14,6 +15,8 @@ import com.udacity.desromj.breakout.util.Constants;
  */
 public class Powerups
 {
+    private static final String TAG = Powerups.class.getSimpleName();
+
     Array<Powerup> powerups;
 
     public Powerups()
@@ -50,7 +53,7 @@ public class Powerups
     {
         for (Powerup pu: powerups)
             if (pu.getType() == type && pu.isAlive())
-                    return true;
+                return true;
 
         return false;
     }

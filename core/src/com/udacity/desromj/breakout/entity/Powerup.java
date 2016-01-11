@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.udacity.desromj.breakout.entity.powerup.MultiBallPowerup;
 import com.udacity.desromj.breakout.entity.powerup.PowerupType;
+import com.udacity.desromj.breakout.entity.powerup.WiderPaddlePowerup;
 import com.udacity.desromj.breakout.screen.BreakoutScreen;
 import com.udacity.desromj.breakout.util.Constants;
 
@@ -69,6 +70,8 @@ public abstract class Powerup
 
     public final void update(float delta)
     {
+        if (this.alive) return;
+
         this.position.y -= delta * Constants.POWERUP_FALL_SPEED;
     }
 
@@ -106,7 +109,10 @@ public abstract class Powerup
         switch (PowerupType.values()[idx])
         {
             case MULTIBALL:
-                return new MultiBallPowerup(new Vector2(position.x, position.y), 0.1f);
+                return new MultiBallPowerup(new Vector2(position.x, position.y));
+
+            case WIDER_PADDLE:
+                return new WiderPaddlePowerup(new Vector2(position.x, position.y));
 
             default:
                 throw new UnsupportedOperationException();

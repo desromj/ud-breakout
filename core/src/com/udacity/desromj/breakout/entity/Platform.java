@@ -5,6 +5,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.udacity.desromj.breakout.entity.powerup.PowerupType;
+import com.udacity.desromj.breakout.screen.BreakoutScreen;
 import com.udacity.desromj.breakout.util.Constants;
 import com.udacity.desromj.breakout.util.Difficulty;
 
@@ -17,18 +19,20 @@ public class Platform
     DirectionMoved lastDirection;
     Rectangle hitRect;
     Difficulty difficulty;
+    BreakoutScreen screen;
 
-    public Platform(Difficulty difficulty)
+    public Platform(BreakoutScreen screen)
     {
-        init(difficulty);
+        init(screen);
     }
 
-    public void init(Difficulty difficulty)
+    public void init(BreakoutScreen screen)
     {
+        this.screen = screen;
         position = new Vector2(Constants.WORLD_WIDTH / 2, Constants.PLATFORM_BOTTOM_MARGIN);
         lastDirection = DirectionMoved.RIGHT;
         hitRect = new Rectangle();
-        this.difficulty = difficulty;
+        this.difficulty = screen.getDifficulty();
     }
 
     public void update(float delta)
@@ -42,7 +46,7 @@ public class Platform
             lastDirection = DirectionMoved.RIGHT;
         }
 
-        // Accelerometer Controls need to be tested
+        // Accelerometer Controls
         boolean hasTiltControl = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
 
         if (hasTiltControl)
@@ -52,10 +56,20 @@ public class Platform
         }
 
         // Constrain the platform to the play area
-        if (position.x - Constants.PLATFORM_WIDTH / 2 <= 0.0f)
-            position.x = Constants.PLATFORM_WIDTH / 2;
-        if (position.x + Constants.PLATFORM_WIDTH / 2 >= Constants.WORLD_WIDTH)
-            position.x = Constants.WORLD_WIDTH - Constants.PLATFORM_WIDTH / 2;
+        float
+                xOffset = Constants.PLATFORM_WIDTH / 2,
+                xWidth = Constants.PLATFORM_WIDTH;
+
+        if (screen.powerupTypeIsActive(PowerupType.WIDER_PADDLE))
+        {
+            xOffset *= Constants.POWERUP_WIDER_PADDLE_WIDTH_MODIFIER;
+            xWidth *= Constants.POWERUP_WIDER_PADDLE_WIDTH_MODIFIER;
+        }
+
+        if (position.x - xOffset <= 0.0f)
+            position.x = xOffset;
+        if (position.x + xOffset >= Constants.WORLD_WIDTH)
+            position.x = Constants.WORLD_WIDTH - xOffset;
 
         // Set the hit rectangle for the ball
 
@@ -64,9 +78,9 @@ public class Platform
          * x values are: left edge of the platform, right edge of the platform
          */
         hitRect.set(
-                this.position.x - Constants.PLATFORM_WIDTH / 2,
+                this.position.x - xOffset,
                 this.position.y + Constants.BALL_HIT_ALLOWANCE,
-                Constants.PLATFORM_WIDTH,
+                xWidth,
                 Constants.PLATFORM_HEIGHT / 2 + Constants.BALL_RADIUS + Constants.BALL_HIT_ALLOWANCE
         );
     }
@@ -75,10 +89,20 @@ public class Platform
     {
         renderer.setColor(Constants.PLATFORM_COLOR);
 
+        float
+                xOffset = Constants.PLATFORM_WIDTH / 2,
+                xWidth = Constants.PLATFORM_WIDTH;
+
+        if (screen.powerupTypeIsActive(PowerupType.WIDER_PADDLE))
+        {
+            xOffset *= Constants.POWERUP_WIDER_PADDLE_WIDTH_MODIFIER;
+            xWidth *= Constants.POWERUP_WIDER_PADDLE_WIDTH_MODIFIER;
+        }
+
         renderer.rect(
-                position.x - (Constants.PLATFORM_WIDTH / 2),
+                position.x - xOffset,
                 position.y - (Constants.PLATFORM_HEIGHT / 2),
-                Constants.PLATFORM_WIDTH,
+                xWidth,
                 Constants.PLATFORM_HEIGHT
         );
     }

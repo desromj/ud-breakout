@@ -1,10 +1,8 @@
 package com.udacity.desromj.breakout.entity.powerup;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.udacity.desromj.breakout.entity.Ball;
-import com.udacity.desromj.breakout.entity.Block;
 import com.udacity.desromj.breakout.entity.Powerup;
 import com.udacity.desromj.breakout.screen.BreakoutScreen;
 import com.udacity.desromj.breakout.util.Constants;
@@ -14,9 +12,13 @@ import com.udacity.desromj.breakout.util.Constants;
  */
 public class MultiBallPowerup extends Powerup
 {
-    public MultiBallPowerup(Vector2 position, float lifeTime)
+    public MultiBallPowerup(Vector2 position)
     {
-        super(position, Constants.POWERUP_MULTIBALL_COLOR, Constants.POWERUP_MULTIBALL_LETTER, lifeTime);
+        super(
+                position,
+                Constants.POWERUP_MULTIBALL_COLOR,
+                Constants.POWERUP_MULTIBALL_LETTER,
+                Constants.POWERUP_MULTIBALL_LIFETIME);
     }
 
     @Override
@@ -38,8 +40,8 @@ public class MultiBallPowerup extends Powerup
             Vector2 velocity = new Vector2(ball.getVelocity().x, ball.getVelocity().y);
 
             float angle = (float) (Math.atan2(velocity.y, velocity.x) * 180.0f / Math.PI);
-            float newAngle1 = angle + Constants.MULTIBALL_SPLIT_DEGREES;
-            float newAngle2 = angle - Constants.MULTIBALL_SPLIT_DEGREES;
+            float newAngle1 = angle + Constants.POWERUP_MULTIBALL_SPLIT_DEGREES;
+            float newAngle2 = angle - Constants.POWERUP_MULTIBALL_SPLIT_DEGREES;
 
             Vector2 newVel1 = new Vector2(
                     (float) Math.cos(Math.toRadians(newAngle1)),
