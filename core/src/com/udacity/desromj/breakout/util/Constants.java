@@ -84,7 +84,7 @@ public class Constants
 
     public static final Color POWERUP_STICKY_PADDLE_COLOR = Color.BLUE;
     public static final String POWERUP_STICKY_PADDLE_LETTER = "S";
-    public static final float POWERUP_STICKY_PADDLE_LIFETIME = 99999.0f;
+    public static final float POWERUP_STICKY_PADDLE_LIFETIME = 30.0f;
 
     private Constants() {}
 }
