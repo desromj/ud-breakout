@@ -78,6 +78,10 @@ public class Constants
     public static final float POWERUP_WIDER_PADDLE_WIDTH_MODIFIER = 2.0f;
     public static final float POWERUP_WIDER_PADDLE_LIFETIME = 10.0f;
 
+    public static final Color POWERUP_UNSTOPPABALL_COLOR = Color.GREEN;
+    public static final String POWERUP_UNSTOPPABALL_LETTER = "S";
+    public static final float POWERUP_UNSTOPPABALL_LIFETIME = 5.0f;
+
 
     private Constants() {}
 }

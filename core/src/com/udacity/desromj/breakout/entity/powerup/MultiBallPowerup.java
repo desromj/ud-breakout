@@ -51,10 +51,7 @@ public class MultiBallPowerup extends Powerup
                     (float) Math.sin(Math.toRadians(newAngle2)));
 
             // Add a ball splitting off the left
-            Ball splitBallLeft = new Ball(
-                    screen.getLaunchPlatform(),
-                    screen.getViewport(),
-                    screen.getDifficulty());
+            Ball splitBallLeft = new Ball(screen);
 
             splitBallLeft.setPosition(ball.getPosition());
             splitBallLeft.setVelocity(newVel1);
@@ -63,10 +60,7 @@ public class MultiBallPowerup extends Powerup
             balls.add(splitBallLeft);
 
             // Add a ball splitting off the right
-            Ball splitBallRight = new Ball(
-                    screen.getLaunchPlatform(),
-                    screen.getViewport(),
-                    screen.getDifficulty());
+            Ball splitBallRight = new Ball(screen);
 
             splitBallRight.setPosition(ball.getPosition());
             splitBallRight.setVelocity(newVel2);

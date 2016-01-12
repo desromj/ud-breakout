@@ -6,5 +6,6 @@ package com.udacity.desromj.breakout.entity.powerup;
 public enum PowerupType
 {
     MULTIBALL,
-    WIDER_PADDLE
+    WIDER_PADDLE,
+    UNSTOPPABALL
 }

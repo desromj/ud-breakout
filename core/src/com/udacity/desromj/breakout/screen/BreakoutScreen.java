@@ -224,7 +224,7 @@ public class BreakoutScreen extends ScreenAdapter implements InputProcessor
     private void initFirstBall()
     {
         balls.clear();
-        balls.add(new Ball(platform, viewport, difficulty));
+        balls.add(new Ball(this));
         
         powerups.init();
     }

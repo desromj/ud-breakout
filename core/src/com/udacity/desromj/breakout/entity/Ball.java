@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.udacity.desromj.breakout.entity.powerup.PowerupType;
+import com.udacity.desromj.breakout.screen.BreakoutScreen;
 import com.udacity.desromj.breakout.util.Constants;
 import com.udacity.desromj.breakout.util.Difficulty;
 
@@ -19,19 +21,16 @@ public class Ball
     public static final String TAG = Ball.class.getName();
 
     Vector2 position, velocity;
-    Platform launchPlatform;
     MoveState moveState;
-    Difficulty difficulty;
+    BreakoutScreen screen;
 
     boolean isOffScreen;
 
     Viewport viewport;
 
-    public Ball(Platform launchPlatform, Viewport viewport, Difficulty difficulty)
+    public Ball(BreakoutScreen screen)
     {
-        this.launchPlatform = launchPlatform;
-        this.viewport = viewport;
-        this.difficulty = difficulty;
+        this.screen = screen;
         init();
     }
 
@@ -48,6 +47,8 @@ public class Ball
         switch (moveState)
         {
             case HELD:
+
+                Platform launchPlatform = screen.getLaunchPlatform();
 
                 this.position.x = launchPlatform.position.x;
                 this.position.y =
@@ -74,6 +75,7 @@ public class Ball
 
     private void bounceOffPlatform()
     {
+        Platform launchPlatform = screen.getLaunchPlatform();
         /*
          * If we are inside the hit rectangle of the platform, detect the angle between ball and platform
          * ONLY IF: The ball is moving, the ball is moving DOWNWARD, and it is within the hit retangle
@@ -130,10 +132,14 @@ public class Ball
         Gdx.app.debug(TAG, "Hit Angle: " + hitAngle);
 
         // if Bounce angle is 45 degrees, bounce Y when between 45-135. Bounce X between 0-45 and 135-180
-        if (hitAngle < Constants.BOUNCE_ANGLE_DEGREES || hitAngle > 180.0f - Constants.BOUNCE_ANGLE_DEGREES)
-            bounceX();
-        else
-            bounceY();
+        if (hitAngle < Constants.BOUNCE_ANGLE_DEGREES || hitAngle > 180.0f - Constants.BOUNCE_ANGLE_DEGREES) {
+            if (!screen.powerupTypeIsActive(PowerupType.UNSTOPPABALL))
+                bounceX();
+        }
+        else {
+            if (!screen.powerupTypeIsActive(PowerupType.UNSTOPPABALL))
+                bounceY();
+        }
     }
 
     /**
@@ -171,8 +177,8 @@ public class Ball
     public void launch(Vector2 target)
     {
         moveState = MoveState.MOVING;
-        velocity.x = target.nor().x * Constants.BALL_SPEED * difficulty.getSpeedMultiplier();
-        velocity.y = target.nor().y * Constants.BALL_SPEED * difficulty.getSpeedMultiplier();
+        velocity.x = target.nor().x * Constants.BALL_SPEED * screen.getDifficulty().getSpeedMultiplier();
+        velocity.y = target.nor().y * Constants.BALL_SPEED * screen.getDifficulty().getSpeedMultiplier();
     }
 
     public Vector2 getPosition() { return this.position; }
@@ -180,8 +186,8 @@ public class Ball
 
     public void setVelocity(Vector2 newVel)
     {
-        velocity.x = newVel.nor().x * Constants.BALL_SPEED * difficulty.getSpeedMultiplier();;
-        velocity.y = newVel.nor().y * Constants.BALL_SPEED * difficulty.getSpeedMultiplier();;
+        velocity.x = newVel.nor().x * Constants.BALL_SPEED * screen.getDifficulty().getSpeedMultiplier();;
+        velocity.y = newVel.nor().y * Constants.BALL_SPEED * screen.getDifficulty().getSpeedMultiplier();;
     }
 
     public void setPosition(Vector2 newPos)
