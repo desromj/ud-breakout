@@ -15,6 +15,8 @@ import com.udacity.desromj.breakout.util.Difficulty;
  */
 public class Platform
 {
+    public static final String TAG = Platform.class.getSimpleName();
+
     Vector2 position;
     DirectionMoved lastDirection;
     Rectangle hitRect;
@@ -92,6 +94,8 @@ public class Platform
         float
                 xOffset = Constants.PLATFORM_WIDTH / 2,
                 xWidth = Constants.PLATFORM_WIDTH;
+
+        // Gdx.app.log(TAG, "Wider Paddle Active: " + screen.powerupTypeIsActive(PowerupType.WIDER_PADDLE));
 
         if (screen.powerupTypeIsActive(PowerupType.WIDER_PADDLE))
         {

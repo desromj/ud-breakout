@@ -43,6 +43,8 @@ public abstract class Powerup
         font = new BitmapFont();
         font.getData().setScale(Constants.POWERUP_FONT_SCALE);
         font.setColor(Constants.POWERUP_SECONDARY_COLOR);
+
+        this.setPowerupType();
     }
 
     /**
@@ -65,7 +67,7 @@ public abstract class Powerup
 
     public final boolean isInEffect()
     {
-        return MathUtils.nanoToSec * (TimeUtils.nanoTime() - startTime) > this.lifeTimeInSeconds;
+        return MathUtils.nanoToSec * (TimeUtils.nanoTime() - startTime) <= this.lifeTimeInSeconds;
     }
 
     public final void update(float delta)

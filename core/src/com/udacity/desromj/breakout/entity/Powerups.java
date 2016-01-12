@@ -52,7 +52,7 @@ public class Powerups
     public boolean powerupTypeIsActive(PowerupType type)
     {
         for (Powerup pu: powerups)
-            if (pu.getType() == type && pu.isAlive())
+            if (pu.getType() == type && pu.isInEffect())
                 return true;
 
         return false;
