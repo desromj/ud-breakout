@@ -79,9 +79,12 @@ public class Constants
     public static final float POWERUP_WIDER_PADDLE_LIFETIME = 10.0f;
 
     public static final Color POWERUP_UNSTOPPABALL_COLOR = Color.GREEN;
-    public static final String POWERUP_UNSTOPPABALL_LETTER = "S";
+    public static final String POWERUP_UNSTOPPABALL_LETTER = "P";
     public static final float POWERUP_UNSTOPPABALL_LIFETIME = 5.0f;
 
+    public static final Color POWERUP_STICKY_PADDLE_COLOR = Color.BLUE;
+    public static final String POWERUP_STICKY_PADDLE_LETTER = "S";
+    public static final float POWERUP_STICKY_PADDLE_LIFETIME = 99999.0f;
 
     private Constants() {}
 }

@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.udacity.desromj.breakout.entity.powerup.MultiBallPowerup;
 import com.udacity.desromj.breakout.entity.powerup.PowerupType;
+import com.udacity.desromj.breakout.entity.powerup.StickyPaddlePowerup;
 import com.udacity.desromj.breakout.entity.powerup.UnstoppaballPowerup;
 import com.udacity.desromj.breakout.entity.powerup.WiderPaddlePowerup;
 import com.udacity.desromj.breakout.screen.BreakoutScreen;
@@ -119,6 +120,9 @@ public abstract class Powerup
 
             case UNSTOPPABALL:
                 return new UnstoppaballPowerup(new Vector2(position.x, position.y));
+
+            case STICKY_PADDLE:
+                return new StickyPaddlePowerup(new Vector2(position.x, position.y));
 
             default:
                 throw new UnsupportedOperationException();

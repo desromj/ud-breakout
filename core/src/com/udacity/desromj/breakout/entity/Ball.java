@@ -1,17 +1,12 @@
 package com.udacity.desromj.breakout.entity;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.graphics.g3d.particles.values.MeshSpawnShapeValue;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.udacity.desromj.breakout.entity.powerup.PowerupType;
 import com.udacity.desromj.breakout.screen.BreakoutScreen;
 import com.udacity.desromj.breakout.util.Constants;
-import com.udacity.desromj.breakout.util.Difficulty;
 
 /**
  * Created by Quiv on 2015-12-27.
@@ -20,7 +15,8 @@ public class Ball
 {
     public static final String TAG = Ball.class.getName();
 
-    Vector2 position, velocity;
+    Vector2 position, velocity, nextLaunchAngle;
+    float stickyXOffset;
     MoveState moveState;
     BreakoutScreen screen;
 
@@ -39,7 +35,9 @@ public class Ball
         moveState = MoveState.HELD;
         position = new Vector2();
         velocity = new Vector2();
+        nextLaunchAngle = new Vector2();
         isOffScreen = false;
+        stickyXOffset = 0.0f;
     }
 
     public void update(float delta)
@@ -50,7 +48,7 @@ public class Ball
 
                 Platform launchPlatform = screen.getLaunchPlatform();
 
-                this.position.x = launchPlatform.position.x;
+                this.position.x = launchPlatform.position.x + stickyXOffset;
                 this.position.y =
                         launchPlatform.position.y
                         + Constants.PLATFORM_HEIGHT / 2
@@ -76,20 +74,28 @@ public class Ball
     private void bounceOffPlatform()
     {
         Platform launchPlatform = screen.getLaunchPlatform();
+
         /*
          * If we are inside the hit rectangle of the platform, detect the angle between ball and platform
          * ONLY IF: The ball is moving, the ball is moving DOWNWARD, and it is within the hit retangle
          */
         if (moveState == MoveState.MOVING && velocity.y <= 0 && launchPlatform.hitRect.contains(position))
         {
-            Vector2 angle = new Vector2(position.x - launchPlatform.position.x, position.y - launchPlatform.position.y);
+            nextLaunchAngle = new Vector2(position.x - launchPlatform.position.x, position.y - launchPlatform.position.y);
 
             // Only launch if we hit at the minimum allowed angle - to prevent 179.99 degree hits which take 5 minutes just to climb the screen
-            float degrees = (float) (Math.atan2(angle.y, angle.x) * 180.0f / Math.PI);
+            float degrees = (float) (Math.atan2(nextLaunchAngle.y, nextLaunchAngle.x) * 180.0f / Math.PI);
             degrees %= 180.0f;
 
             if (degrees > Constants.MINIMUM_HIT_ANGLE_DEGREES && degrees <= 180.0f - Constants.MINIMUM_HIT_ANGLE_DEGREES)
-                launch(angle);
+            {
+                if (screen.powerupTypeIsActive(PowerupType.STICKY_PADDLE)) {
+                    stickyXOffset = this.position.x - launchPlatform.position.x;
+                    moveState = MoveState.HELD;
+                } else {
+                    launch(nextLaunchAngle);
+                }
+            }
         }
     }
 
@@ -174,8 +180,14 @@ public class Ball
         renderer.circle(position.x, position.y, Constants.BALL_RADIUS);
     }
 
+    public void launchAtNextAngle()
+    {
+        launch(this.nextLaunchAngle);
+    }
+
     public void launch(Vector2 target)
     {
+        this.stickyXOffset = 0.0f;
         moveState = MoveState.MOVING;
         velocity.x = target.nor().x * Constants.BALL_SPEED * screen.getDifficulty().getSpeedMultiplier();
         velocity.y = target.nor().y * Constants.BALL_SPEED * screen.getDifficulty().getSpeedMultiplier();

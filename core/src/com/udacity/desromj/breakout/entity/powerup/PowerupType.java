@@ -7,5 +7,6 @@ public enum PowerupType
 {
     MULTIBALL,
     WIDER_PADDLE,
-    UNSTOPPABALL
+    UNSTOPPABALL,
+    STICKY_PADDLE
 }
