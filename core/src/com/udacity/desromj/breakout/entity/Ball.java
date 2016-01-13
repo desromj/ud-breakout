@@ -155,9 +155,32 @@ public class Ball
      */
     public boolean isColliding(Block block)
     {
-        if (Math.abs(this.position.x - block.position.x) < Constants.BALL_RADIUS + Constants.BALL_HIT_ALLOWANCE + Constants.BLOCK_WIDTH / 2
-            && Math.abs(this.position.y - block.position.y) < Constants.BALL_RADIUS + Constants.BALL_HIT_ALLOWANCE + Constants.BLOCK_HEIGHT / 2)
+        float
+            collideWidth = Constants.BALL_RADIUS + Constants.BLOCK_WIDTH / 2,
+            collideHeight = Constants.BALL_RADIUS + Constants.BLOCK_HEIGHT / 2;
+
+        // If we are colliding...
+        if (Math.abs(this.position.x - block.position.x) < collideWidth
+            && Math.abs(this.position.y - block.position.y) < collideHeight)
         {
+            /*
+                Move the ball to the outside of the block based on if it's above, below, left, or right.
+                This prevents infinite collisions and chain reactions between blocks
+             */
+
+            // Above + Below
+            if (this.position.y - block.position.y < collideHeight && this.position.y - block.position.y > 0)
+                this.position.y = block.position.y + collideHeight;
+            else if (block.position.y - this.position.y < collideHeight && block.position.y - this.position.y > 0)
+                this.position.y = block.position.y - collideHeight;
+
+            // Left + Right
+            if (block.position.x - this.position.x < collideWidth && block.position.x - this.position.x > 0)
+                this.position.x = block.position.x - collideWidth;
+            else if (this.position.x - block.position.x < collideWidth && this.position.x - block.position.x > 0)
+                this.position.x = block.position.x + collideWidth;
+
+            // Finally, return true that we're colliding
             return true;
         }
 

@@ -35,7 +35,7 @@ public class Constants
     public static final int BLOCKS_PER_ROW = 12;
 
     public static final float BLOCK_WIDTH = WORLD_WIDTH / BLOCKS_PER_ROW;
-    public static final float BLOCK_HEIGHT = 30.0f;
+    public static final float BLOCK_HEIGHT = WORLD_HEIGHT / 20.0f;
     public static final float BLOCK_BORDER_WIDTH = 2.5f;
     public static final float BLOCK_MARGIN_FROM_TOP = 60.0f;
 
