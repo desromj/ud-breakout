@@ -54,9 +54,8 @@ public class Blocks
         for (int i = 0; i < blocks.size; i++) {
             Block block = blocks.get(i);
 
-            if (ball.isColliding(block))
+            if (ball.collided(block))
             {
-                ball.bounceOffBlock(block);
                 game.score.addScore(block, difficulty);
 
                 if (new Random().nextFloat() <= Constants.POWERUP_SPAWN_PERCENT / 100.0f)
