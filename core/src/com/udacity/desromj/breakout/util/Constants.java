@@ -39,7 +39,6 @@ public class Constants
     public static final float BLOCK_BORDER_WIDTH = 2.5f;
     public static final float BLOCK_MARGIN_FROM_TOP = 60.0f;
 
-
     /** Platform's height from the bottom of the screen */
     public static final float PLATFORM_BOTTOM_MARGIN = 40.0f;
 
@@ -59,7 +58,6 @@ public class Constants
     public static final float INGAME_FONT_SCALE = 1.0f;
     public static final float POWERUP_FONT_SCALE = 0.8f;
 
-    public static final float BOUNCE_ANGLE_DEGREES = (float) Math.abs((Math.atan2(BLOCK_HEIGHT + BALL_RADIUS, BLOCK_WIDTH + BALL_RADIUS) * 180.0f / Math.PI));
     public static final float MINIMUM_HIT_ANGLE_DEGREES = 10.0f;
 
     public static final float POWERUP_SPAWN_PERCENT = 12.5f;
