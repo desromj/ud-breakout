@@ -140,7 +140,7 @@ public class Ball
             collideHeight = Constants.BALL_RADIUS + Constants.BLOCK_HEIGHT / 2;
 
         // If we are colliding...
-        if (Math.abs(this.position.x - block.position.x) < collideWidth && Math.abs(this.position.y - block.position.y) < collideHeight)
+        if (Math.abs(this.position.x - block.position.x) <= collideWidth && Math.abs(this.position.y - block.position.y) <= collideHeight)
         {
             /*
                 Move the ball to the outside of the block based on if it's above, below, left, or right.
@@ -150,30 +150,38 @@ public class Ball
 
             // Above
             if (this.lastFramePosition.y - block.position.y > collideHeight &&
-                    this.position.y - block.position.y <= collideHeight && this.position.y - block.position.y >= 0) {
+                    this.position.y - block.position.y <= collideHeight && this.position.y - block.position.y >= 0)
+            {
                 this.position.y = block.position.y + collideHeight;
-                bounceY();
+                if (!screen.powerupTypeIsActive(PowerupType.UNSTOPPABALL))
+                    bounceY();
             }
 
             // Below
             if (block.position.y - this.lastFramePosition.y > collideHeight &&
-                    block.position.y - this.position.y <= collideHeight && block.position.y - this.position.y >= 0) {
+                    block.position.y - this.position.y <= collideHeight && block.position.y - this.position.y >= 0)
+            {
                 this.position.y = block.position.y - collideHeight;
-                bounceY();
+                if (!screen.powerupTypeIsActive(PowerupType.UNSTOPPABALL))
+                    bounceY();
             }
 
             // Left
             if (block.position.x - this.lastFramePosition.x > collideWidth &&
-                    block.position.x - this.position.x <= collideWidth && block.position.x - this.position.x >= 0) {
+                    block.position.x - this.position.x <= collideWidth && block.position.x - this.position.x >= 0)
+            {
                 this.position.x = block.position.x - collideWidth;
-                bounceX();
+                if (!screen.powerupTypeIsActive(PowerupType.UNSTOPPABALL))
+                    bounceX();
             }
 
             // Right
             if (this.lastFramePosition.x - block.position.x > collideWidth &&
-                    this.position.x - block.position.x <= collideWidth && this.position.x - block.position.x >= 0) {
+                    this.position.x - block.position.x <= collideWidth && this.position.x - block.position.x >= 0)
+            {
                 this.position.x = block.position.x + collideWidth;
-                bounceX();
+                if (!screen.powerupTypeIsActive(PowerupType.UNSTOPPABALL))
+                    bounceX();
             }
 
             // Finally, return true that we're colliding
