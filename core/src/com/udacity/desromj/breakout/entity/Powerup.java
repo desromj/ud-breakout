@@ -55,6 +55,11 @@ public abstract class Powerup
     protected abstract void setPowerupType();
     protected abstract void doActivationEffects(BreakoutScreen screen);
 
+    protected final void kill()
+    {
+        this.startTime = 0;
+    }
+
     public final void activate(BreakoutScreen screen)
     {
         this.startTime = TimeUtils.nanoTime();

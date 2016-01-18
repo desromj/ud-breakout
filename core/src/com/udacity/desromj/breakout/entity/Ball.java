@@ -15,7 +15,8 @@ public class Ball
 {
     public static final String TAG = Ball.class.getName();
 
-    Vector2 position, velocity, nextLaunchAngle;
+    Vector2 lastFramePosition, position, velocity, nextLaunchAngle;
+
     float stickyXOffset;
     MoveState moveState;
     BreakoutScreen screen;
@@ -33,6 +34,7 @@ public class Ball
     public void init()
     {
         moveState = MoveState.HELD;
+        lastFramePosition = new Vector2();
         position = new Vector2();
         velocity = new Vector2();
         nextLaunchAngle = new Vector2();
@@ -42,6 +44,9 @@ public class Ball
 
     public void update(float delta)
     {
+        lastFramePosition.x = this.position.x;
+        lastFramePosition.y = this.position.y;
+
         switch (moveState)
         {
             case HELD:
@@ -123,62 +128,61 @@ public class Ball
         isOffScreen = (position.y <= 0);
     }
 
-    // Bounce off the block in the desired direction - bounces depending on whether it hits from the x or y axis first
-    public void bounceOffBlock(Block block)
-    {
-        // Check the hit angle of the ball against the block
-        float hitAngle = (float) (Math.atan2(
-                block.position.y - this.position.y,
-                block.position.x - this.position.x
-        ) * 180.0f / Math.PI);
-
-        // Get the angle simplified to within 180 degrees
-        hitAngle = Math.abs(hitAngle % 180.0f);
-
-        Gdx.app.debug(TAG, "Hit Angle: " + hitAngle);
-
-        // if Bounce angle is 45 degrees, bounce Y when between 45-135. Bounce X between 0-45 and 135-180
-        if (hitAngle < Constants.BOUNCE_ANGLE_DEGREES || hitAngle > 180.0f - Constants.BOUNCE_ANGLE_DEGREES) {
-            if (!screen.powerupTypeIsActive(PowerupType.UNSTOPPABALL))
-                bounceX();
-        }
-        else {
-            if (!screen.powerupTypeIsActive(PowerupType.UNSTOPPABALL))
-                bounceY();
-        }
-    }
-
     /**
      * Checks if the ball is colliding with the passed block
      * @param block
      * @return
      */
-    public boolean isColliding(Block block)
+    public boolean collided(Block block)
     {
         float
             collideWidth = Constants.BALL_RADIUS + Constants.BLOCK_WIDTH / 2,
             collideHeight = Constants.BALL_RADIUS + Constants.BLOCK_HEIGHT / 2;
 
         // If we are colliding...
-        if (Math.abs(this.position.x - block.position.x) < collideWidth
-            && Math.abs(this.position.y - block.position.y) < collideHeight)
+        if (Math.abs(this.position.x - block.position.x) <= collideWidth && Math.abs(this.position.y - block.position.y) <= collideHeight)
         {
             /*
                 Move the ball to the outside of the block based on if it's above, below, left, or right.
-                This prevents infinite collisions and chain reactions between blocks
+                This prevents infinite collisions and chain reactions between blocks.
+                Use the last frame's position to tell if it just entered the block this cycle
              */
 
-            // Above + Below
-            if (this.position.y - block.position.y < collideHeight && this.position.y - block.position.y > 0)
+            // Above
+            if (this.lastFramePosition.y - block.position.y > collideHeight &&
+                    this.position.y - block.position.y <= collideHeight && this.position.y - block.position.y >= 0)
+            {
                 this.position.y = block.position.y + collideHeight;
-            else if (block.position.y - this.position.y < collideHeight && block.position.y - this.position.y > 0)
-                this.position.y = block.position.y - collideHeight;
+                if (!screen.powerupTypeIsActive(PowerupType.UNSTOPPABALL))
+                    bounceY();
+            }
 
-            // Left + Right
-            if (block.position.x - this.position.x < collideWidth && block.position.x - this.position.x > 0)
+            // Below
+            if (block.position.y - this.lastFramePosition.y > collideHeight &&
+                    block.position.y - this.position.y <= collideHeight && block.position.y - this.position.y >= 0)
+            {
+                this.position.y = block.position.y - collideHeight;
+                if (!screen.powerupTypeIsActive(PowerupType.UNSTOPPABALL))
+                    bounceY();
+            }
+
+            // Left
+            if (block.position.x - this.lastFramePosition.x > collideWidth &&
+                    block.position.x - this.position.x <= collideWidth && block.position.x - this.position.x >= 0)
+            {
                 this.position.x = block.position.x - collideWidth;
-            else if (this.position.x - block.position.x < collideWidth && this.position.x - block.position.x > 0)
+                if (!screen.powerupTypeIsActive(PowerupType.UNSTOPPABALL))
+                    bounceX();
+            }
+
+            // Right
+            if (this.lastFramePosition.x - block.position.x > collideWidth &&
+                    this.position.x - block.position.x <= collideWidth && this.position.x - block.position.x >= 0)
+            {
                 this.position.x = block.position.x + collideWidth;
+                if (!screen.powerupTypeIsActive(PowerupType.UNSTOPPABALL))
+                    bounceX();
+            }
 
             // Finally, return true that we're colliding
             return true;

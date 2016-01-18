@@ -68,5 +68,7 @@ public class MultiBallPowerup extends Powerup
 
             balls.add(splitBallRight);
         }
+
+        this.kill();
     }
 }
