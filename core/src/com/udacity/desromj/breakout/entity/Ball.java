@@ -153,7 +153,9 @@ public class Ball
                     this.position.y - block.position.y <= collideHeight && this.position.y - block.position.y >= 0)
             {
                 this.position.y = block.position.y + collideHeight;
-                if (!screen.powerupTypeIsActive(PowerupType.UNSTOPPABALL))
+
+                if (!screen.powerupTypeIsActive(PowerupType.UNSTOPPABALL)
+                        && this.velocity.y <= 0.0f)
                     bounceY();
             }
 
@@ -162,7 +164,9 @@ public class Ball
                     block.position.y - this.position.y <= collideHeight && block.position.y - this.position.y >= 0)
             {
                 this.position.y = block.position.y - collideHeight;
-                if (!screen.powerupTypeIsActive(PowerupType.UNSTOPPABALL))
+
+                if (!screen.powerupTypeIsActive(PowerupType.UNSTOPPABALL)
+                        && this.velocity.y >= 0.0f)
                     bounceY();
             }
 
@@ -171,7 +175,9 @@ public class Ball
                     block.position.x - this.position.x <= collideWidth && block.position.x - this.position.x >= 0)
             {
                 this.position.x = block.position.x - collideWidth;
-                if (!screen.powerupTypeIsActive(PowerupType.UNSTOPPABALL))
+
+                if (!screen.powerupTypeIsActive(PowerupType.UNSTOPPABALL)
+                        && this.velocity.x >= 0.0f)
                     bounceX();
             }
 
@@ -180,7 +186,9 @@ public class Ball
                     this.position.x - block.position.x <= collideWidth && this.position.x - block.position.x >= 0)
             {
                 this.position.x = block.position.x + collideWidth;
-                if (!screen.powerupTypeIsActive(PowerupType.UNSTOPPABALL))
+
+                if (!screen.powerupTypeIsActive(PowerupType.UNSTOPPABALL)
+                        && this.velocity.x <= 0.0f)
                     bounceX();
             }
 
