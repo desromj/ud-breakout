@@ -5,7 +5,7 @@ Quiv's Breakout!!!
 
 What is it?
 ===========
-A recreation of the popular 'Breakout' game, where the player controls a paddle 
+A re-creation of the popular 'Breakout' game, where the player controls a paddle 
 with which to bounce a ball off of. The player bounces the ball off coloured blocks
 and tries to clear them all within the time limit and with a certain number of lives.
 
@@ -38,9 +38,9 @@ Scoring
   - Red Blocks =      500 points
 
 Based on the difficulty, these point values are modified:
-  - Easy (Breeze):        0.75x
+  - Easy (Breeze):        0.80x
   - Medium (Gust):        1.00x
-  - Hard (Storm):         1.25x
+  - Hard (Storm):         1.20x
   - Insane (Hurricane):   1.50x
 
 Combo Scoring
@@ -52,6 +52,18 @@ try to hit as many blocks of the same colour in a row as you can!
 
 ex: A combo of 2 when hitting a red block will increment the counter to 3,
     then award 3 x 500 = 1500 points for that block!
+
+Powerups
+========
+Four different kinds of Powerups can spawn, with many different effects:
+  - Red "M" - Multiball
+    - Splits every ball onscreen into 3 extra balls
+  - Yellow "W" - Widen
+    - Doubles the width of the paddle for a limited time
+  - Green "P" - Unstoppa-ball
+    - Makes all balls on screen plow straight through blocks without bouncing
+  - Blue "S" - Sticky Pad
+    - When the ball hits the paddle, it sticks so it can be manually launched
 
 Game Over
 =========
