@@ -5,9 +5,9 @@ package com.udacity.desromj.breakout.util;
  */
 public enum Difficulty
 {
-    EASY(0.75f, 4, 0.75f, "Breeze", 5, 5, 4000),
+    EASY(0.8f, 4, 0.8f, "Breeze", 5, 5, 4000),
     MEDIUM(1.0f, 6, 1.0f, "Gust", 4, 4, 7500),
-    HARD(1.25f, 7, 1.25f, "Storm", 3, 3, 10000),
+    HARD(1.2f, 7, 1.2f, "Storm", 3, 3, 10000),
     INSANE(1.5f, 9, 1.5f, "Hurricane", 2, 3, 15000);
 
     private float scoreMultiplier;

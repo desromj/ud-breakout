@@ -13,7 +13,7 @@ public class Constants
     public static final float WORLD_HEIGHT = 600.0f;
 
     public static final String GAME_TITLE = "Quiv's Breakout!!!";
-    public static final float TITLE_BORDER = 40.0f;
+    public static final float TITLE_BORDER = 25.0f;
 
     // Get a dark background for our white to stand out against
     public static final float START_BUTTON_WIDTH = 160.0f;
@@ -22,7 +22,7 @@ public class Constants
 
     public static final float PLATFORM_WIDTH = 75.0f;
     public static final float PLATFORM_HEIGHT = 20.0f;
-    public static final float PLATFORM_MAX_SPEED = 300.0f;
+    public static final float PLATFORM_MAX_SPEED = 360.0f;
     public static final Color PLATFORM_COLOR = Color.PURPLE;
 
     // Area within/above the platform within which the ball can be hit (including its radius)
@@ -60,16 +60,16 @@ public class Constants
 
     public static final float MINIMUM_HIT_ANGLE_DEGREES = 10.0f;
 
-    public static final float POWERUP_SPAWN_PERCENT = 12.5f;
+    public static final float POWERUP_SPAWN_PERCENT = 8.0f;
     public static final float POWERUP_FALL_SPEED = 120.0f;
-    public static final float POWERUP_RADIUS = 8.0f;
-    public static final float POWERUP_MARGIN = 1.0f;
+    public static final float POWERUP_RADIUS = 9.0f;
+    public static final float POWERUP_MARGIN = 1.5f;
     public static final Color POWERUP_SECONDARY_COLOR = Color.WHITE;
 
     public static final Color POWERUP_MULTIBALL_COLOR = Color.RED;
     public static final String POWERUP_MULTIBALL_LETTER = "M";
     public static final float POWERUP_MULTIBALL_SPLIT_DEGREES = 12.5f;
-    public static final float POWERUP_MULTIBALL_LIFETIME = 0.0000001f;
+    public static final float POWERUP_MULTIBALL_LIFETIME = 0.0000001f;      // instantly dies
 
     public static final Color POWERUP_WIDER_PADDLE_COLOR = Color.YELLOW;
     public static final String POWERUP_WIDER_PADDLE_LETTER = "W";
