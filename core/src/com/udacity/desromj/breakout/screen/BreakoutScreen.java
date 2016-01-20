@@ -297,17 +297,16 @@ public class BreakoutScreen extends ScreenAdapter implements InputProcessor
 
             if (keycode == Input.Keys.SPACE)
             {
-                Vector2 nextAngle = new Vector2();
-
                 if (powerupTypeIsActive(PowerupType.STICKY_PADDLE))
                 {
                     ball.launchAtNextAngle();
                 }
                 else
                 {
-                    nextAngle.x = (platform.getLastDirection() == Platform.DirectionMoved.RIGHT) ? 1 : -1;
-                    nextAngle.y = 1;
-                    ball.launch(nextAngle);
+                    ball.launch(new Vector2(
+                            (platform.getLastDirection() == Platform.DirectionMoved.RIGHT) ? 1 : -1,
+                            1
+                    ));
                 }
             }
         }

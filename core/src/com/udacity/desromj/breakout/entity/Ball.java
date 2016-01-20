@@ -86,7 +86,7 @@ public class Ball
          */
         if (moveState == MoveState.MOVING && velocity.y <= 0 && launchPlatform.hitRect.contains(position))
         {
-            nextLaunchAngle = new Vector2(position.x - launchPlatform.position.x, position.y - launchPlatform.position.y);
+            nextLaunchAngle.set(position.x - launchPlatform.position.x, position.y - launchPlatform.position.y);
 
             // Only launch if we hit at the minimum allowed angle - to prevent 179.99 degree hits which take 5 minutes just to climb the screen
             float degrees = (float) (Math.atan2(nextLaunchAngle.y, nextLaunchAngle.x) * 180.0f / Math.PI);
