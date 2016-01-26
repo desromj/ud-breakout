@@ -15,8 +15,6 @@ import com.udacity.desromj.breakout.util.Difficulty;
  */
 public class Platform
 {
-    public static final String TAG = Platform.class.getSimpleName();
-
     Vector2 position;
     DirectionMoved lastDirection;
     Rectangle hitRect;

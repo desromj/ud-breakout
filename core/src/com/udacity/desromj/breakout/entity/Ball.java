@@ -23,8 +23,6 @@ public class Ball
 
     boolean isOffScreen;
 
-    Viewport viewport;
-
     public Ball(BreakoutScreen screen)
     {
         this.screen = screen;

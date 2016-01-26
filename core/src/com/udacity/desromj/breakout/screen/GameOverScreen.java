@@ -1,6 +1,7 @@
 package com.udacity.desromj.breakout.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
@@ -123,7 +124,10 @@ public class GameOverScreen extends ScreenAdapter implements InputProcessor
 
     @Override
     public boolean keyDown(int keycode) {
-        return false;
+        if (keycode == Input.Keys.ESCAPE)
+            Gdx.app.exit();
+
+        return true;
     }
 
     @Override

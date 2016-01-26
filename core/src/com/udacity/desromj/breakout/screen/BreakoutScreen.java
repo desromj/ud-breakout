@@ -274,11 +274,6 @@ public class BreakoutScreen extends ScreenAdapter implements InputProcessor
         return platform;
     }
 
-    public Viewport getViewport()
-    {
-        return viewport;
-    }
-
     public Difficulty getDifficulty()
     {
         return difficulty;
@@ -310,6 +305,9 @@ public class BreakoutScreen extends ScreenAdapter implements InputProcessor
                 }
             }
         }
+
+        if (keycode == Input.Keys.ESCAPE)
+            Gdx.app.exit();
 
         return true;
     }

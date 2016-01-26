@@ -15,8 +15,6 @@ import com.udacity.desromj.breakout.util.Constants;
  */
 public class Powerups
 {
-    private static final String TAG = Powerups.class.getSimpleName();
-
     Array<Powerup> powerups;
 
     public Powerups()
@@ -73,12 +71,6 @@ public class Powerups
             if (pu.isAlive() && !pu.isInEffect())
                 powerups.removeIndex(i);
         }
-
-        if (powerups.size > 0)
-            Gdx.app.log(TAG, "====================================================================");
-
-        for (Powerup pu: powerups)
-            Gdx.app.log(TAG, "Powerup: " + pu.getType() + " Active: " + pu.isAlive() + " In Effect: " + pu.isInEffect());
     }
 
     public void renderShapes(ShapeRenderer renderer)
