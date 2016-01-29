@@ -255,7 +255,7 @@ public class StartScreen extends ScreenAdapter implements InputProcessor
         }
 
         // Reset the score when we begin a game
-        this.game.score.init();
+        BreakoutGame.score.init();
     }
 
     @Override

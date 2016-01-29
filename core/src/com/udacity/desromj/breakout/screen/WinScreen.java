@@ -63,7 +63,7 @@ public class WinScreen extends ScreenAdapter implements InputProcessor
         batch.setProjectionMatrix(viewport.getCamera().combined);
         batch.begin();
 
-        if (game.score.getScore() >= game.score.getTopScore())
+        if (BreakoutGame.score.getScore() >= BreakoutGame.score.getTopScore())
         {
             font.getData().setScale(Constants.TOP_SCORE_FONT_SCALE);
             font.setColor(Constants.TOP_SCORE_TEXT_COLOR);
@@ -82,7 +82,7 @@ public class WinScreen extends ScreenAdapter implements InputProcessor
         font.setColor(Constants.WIN_TEXT_COLOR);
         font.draw(
                 batch,
-                "You Win!!!\nYour Score: " + game.score.getScore() + "\nTop Score: " + game.score.getTopScore() +
+                "You Win!!!\nYour Score: " + BreakoutGame.score.getScore() + "\nTop Score: " + BreakoutGame.score.getTopScore() +
                         "\n\nTouch the Screen to play again!",
                 Constants.WORLD_WIDTH / 2,
                 Constants.WORLD_HEIGHT / 2,

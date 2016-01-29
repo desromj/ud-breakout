@@ -110,7 +110,7 @@ public class BreakoutScreen extends ScreenAdapter implements InputProcessor
         checkBallIsOnScreen();
 
         for (Ball ball: balls)
-            blocks.checkCollision(ball, game, this);
+            blocks.checkCollision(ball, this);
 
         // Clear the screen to white - will be drawing a custom rectangle colour blend
         Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -181,8 +181,8 @@ public class BreakoutScreen extends ScreenAdapter implements InputProcessor
         // Draw the rest of the GUI
         font.draw(
                 batch,
-                "Score: " + game.score.getScore() + "\n" +
-                        "Top Score: " + game.score.getTopScore(),
+                "Score: " + BreakoutGame.score.getScore() + "\n" +
+                        "Top Score: " + BreakoutGame.score.getTopScore(),
                 Constants.TEXT_MARGIN,
                 Constants.WORLD_HEIGHT - Constants.TEXT_MARGIN,
                 0,
@@ -193,8 +193,8 @@ public class BreakoutScreen extends ScreenAdapter implements InputProcessor
         font.draw(
                 batch,
                 "Lives: " + numLives + "\n" +
-                        "Current Combo: " + game.score.getCurrentCombo() + "\n" +
-                        "Combo Color: " + game.score.getLastComboLabel(),
+                        "Current Combo: " + BreakoutGame.score.getCurrentCombo() + "\n" +
+                        "Combo Color: " + BreakoutGame.score.getLastComboLabel(),
                 Constants.WORLD_WIDTH - Constants.TEXT_MARGIN,
                 Constants.WORLD_HEIGHT - Constants.TEXT_MARGIN,
                 0,
@@ -214,7 +214,7 @@ public class BreakoutScreen extends ScreenAdapter implements InputProcessor
         if (balls.size <= 0)
         {
             initFirstBall();
-            game.score.resetCombo();
+            BreakoutGame.score.resetCombo();
 
             if (--numLives <= 0)
                 endGame(false);
@@ -237,7 +237,7 @@ public class BreakoutScreen extends ScreenAdapter implements InputProcessor
     private void endGame(boolean win)
     {
         if (win) {
-            game.score.addScore(difficulty.getClearBonus());
+            BreakoutGame.score.addScore(difficulty.getClearBonus());
             game.showWinScreen();
         } else {
             game.showGameOverScreen();
