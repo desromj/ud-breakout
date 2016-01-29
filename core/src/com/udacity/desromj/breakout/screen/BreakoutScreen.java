@@ -97,7 +97,7 @@ public class BreakoutScreen extends ScreenAdapter implements InputProcessor
         platform.update(delta);
 
         for (Ball ball: balls)
-            ball.update(delta);
+            ball.update(delta, this);
 
         powerups.update(delta);
         powerups.checkCollision(platform, this);
@@ -247,13 +247,6 @@ public class BreakoutScreen extends ScreenAdapter implements InputProcessor
     public boolean powerupTypeIsActive(PowerupType type)
     {
         return powerups.powerupTypeIsActive(type);
-    }
-
-    @Override
-    public void hide()
-    {
-        // TODO: Used to dispose renderers here, which was causing errors due to an error:
-        // Cannot use offsets when Array Buffer Object is disabled
     }
 
     @Override

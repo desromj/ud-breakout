@@ -23,6 +23,9 @@ import java.util.Random;
  */
 public abstract class Powerup
 {
+    /**
+     * Each child class should initialize this to its delegated type
+     */
     protected PowerupType type;
 
     Vector2 position;

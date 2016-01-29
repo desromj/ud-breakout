@@ -19,13 +19,13 @@ public class Ball
 
     float stickyXOffset;
     MoveState moveState;
-    BreakoutScreen screen;
+    float speedMultiplier;
 
     boolean isOffScreen;
 
     public Ball(BreakoutScreen screen)
     {
-        this.screen = screen;
+        this.speedMultiplier = screen.getDifficulty().getSpeedMultiplier();
         init();
     }
 
@@ -40,20 +40,20 @@ public class Ball
         stickyXOffset = 0.0f;
     }
 
-    public void update(float delta)
+    public void update(float delta, BreakoutScreen screen)
     {
         lastFramePosition.x = this.position.x;
         lastFramePosition.y = this.position.y;
+
+        Platform platform = screen.getLaunchPlatform();
 
         switch (moveState)
         {
             case HELD:
 
-                Platform launchPlatform = screen.getLaunchPlatform();
-
-                this.position.x = launchPlatform.position.x + stickyXOffset;
+                this.position.x = platform.position.x + stickyXOffset;
                 this.position.y =
-                        launchPlatform.position.y
+                        platform.position.y
                         + Constants.PLATFORM_HEIGHT / 2
                         + Constants.BALL_RADIUS;
 
@@ -71,20 +71,20 @@ public class Ball
 
         // Constrain the ball to the play area and make it bounce, except for the bottom
         constrainToPlayArea();
-        bounceOffPlatform();
+        bounceOffPlatform(screen);
     }
 
-    private void bounceOffPlatform()
+    private void bounceOffPlatform(BreakoutScreen screen)
     {
-        Platform launchPlatform = screen.getLaunchPlatform();
+        Platform platform = screen.getLaunchPlatform();
 
         /*
          * If we are inside the hit rectangle of the platform, detect the angle between ball and platform
          * ONLY IF: The ball is moving, the ball is moving DOWNWARD, and it is within the hit retangle
          */
-        if (moveState == MoveState.MOVING && velocity.y <= 0 && launchPlatform.hitRect.contains(position))
+        if (moveState == MoveState.MOVING && velocity.y <= 0 && platform.hitRect.contains(position))
         {
-            nextLaunchAngle.set(position.x - launchPlatform.position.x, position.y - launchPlatform.position.y);
+            nextLaunchAngle.set(position.x - platform.position.x, position.y - platform.position.y);
 
             // Only launch if we hit at the minimum allowed angle - to prevent 179.99 degree hits which take 5 minutes just to climb the screen
             float degrees = (float) (Math.atan2(nextLaunchAngle.y, nextLaunchAngle.x) * 180.0f / Math.PI);
@@ -93,7 +93,7 @@ public class Ball
             if (degrees > Constants.MINIMUM_HIT_ANGLE_DEGREES && degrees <= 180.0f - Constants.MINIMUM_HIT_ANGLE_DEGREES)
             {
                 if (screen.powerupTypeIsActive(PowerupType.STICKY_PADDLE)) {
-                    stickyXOffset = this.position.x - launchPlatform.position.x;
+                    stickyXOffset = this.position.x - platform.position.x;
                     moveState = MoveState.HELD;
                 } else {
                     launch(nextLaunchAngle);
@@ -131,7 +131,7 @@ public class Ball
      * @param block
      * @return
      */
-    public boolean collided(Block block)
+    public boolean collided(Block block, BreakoutScreen screen)
     {
         float
             collideWidth = Constants.BALL_RADIUS + Constants.BLOCK_WIDTH / 2,
@@ -222,8 +222,8 @@ public class Ball
     {
         this.stickyXOffset = 0.0f;
         moveState = MoveState.MOVING;
-        velocity.x = target.nor().x * Constants.BALL_SPEED * screen.getDifficulty().getSpeedMultiplier();
-        velocity.y = target.nor().y * Constants.BALL_SPEED * screen.getDifficulty().getSpeedMultiplier();
+        velocity.x = target.nor().x * Constants.BALL_SPEED * speedMultiplier;
+        velocity.y = target.nor().y * Constants.BALL_SPEED * speedMultiplier;
     }
 
     public Vector2 getPosition() { return this.position; }
@@ -231,8 +231,8 @@ public class Ball
 
     public void setVelocity(Vector2 newVel)
     {
-        velocity.x = newVel.nor().x * Constants.BALL_SPEED * screen.getDifficulty().getSpeedMultiplier();;
-        velocity.y = newVel.nor().y * Constants.BALL_SPEED * screen.getDifficulty().getSpeedMultiplier();;
+        velocity.x = newVel.nor().x * Constants.BALL_SPEED * speedMultiplier;
+        velocity.y = newVel.nor().y * Constants.BALL_SPEED * speedMultiplier;
     }
 
     public void setPosition(Vector2 newPos)

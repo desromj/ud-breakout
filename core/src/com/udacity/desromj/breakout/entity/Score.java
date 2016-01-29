@@ -24,7 +24,7 @@ public class Score
     public void init()
     {
         score = 0;
-        lastColorDestroyed = Color.BLACK; // No black blocks, so combo will always start at 1
+        lastColorDestroyed = Color.BLACK; // No black blocks, so combo will always start at 0
         currentCombo = 0;
     }
 

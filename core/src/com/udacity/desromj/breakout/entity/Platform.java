@@ -18,7 +18,6 @@ public class Platform
     Vector2 position;
     DirectionMoved lastDirection;
     Rectangle hitRect;
-    Difficulty difficulty;
     BreakoutScreen screen;
 
     public Platform(BreakoutScreen screen)
@@ -32,17 +31,16 @@ public class Platform
         position = new Vector2(Constants.WORLD_WIDTH / 2, Constants.PLATFORM_BOTTOM_MARGIN);
         lastDirection = DirectionMoved.RIGHT;
         hitRect = new Rectangle();
-        this.difficulty = screen.getDifficulty();
     }
 
     public void update(float delta)
     {
         // Keyboard Controls
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            position.x -= Constants.PLATFORM_MAX_SPEED * delta * difficulty.getSpeedMultiplier();
+            position.x -= Constants.PLATFORM_MAX_SPEED * delta * screen.getDifficulty().getSpeedMultiplier();
             lastDirection = DirectionMoved.LEFT;
         } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            position.x += Constants.PLATFORM_MAX_SPEED * delta * difficulty.getSpeedMultiplier();
+            position.x += Constants.PLATFORM_MAX_SPEED * delta * screen.getDifficulty().getSpeedMultiplier();
             lastDirection = DirectionMoved.RIGHT;
         }
 

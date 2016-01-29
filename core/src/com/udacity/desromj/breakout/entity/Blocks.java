@@ -49,14 +49,14 @@ public class Blocks
      * Loops through all blocks onScreen and checks if the ball is colliding with them.
      * If it is, determines whether or not to bounce the ball along the X or Y axis
      */
-    public void checkCollision(Ball ball, BreakoutGame game, BreakoutScreen screen)
+    public void checkCollision(Ball ball, BreakoutScreen screen)
     {
         for (int i = 0; i < blocks.size; i++) {
             Block block = blocks.get(i);
 
-            if (ball.collided(block))
+            if (ball.collided(block, screen))
             {
-                game.score.addScore(block, difficulty);
+                BreakoutGame.score.addScore(block, difficulty);
 
                 if (new Random().nextFloat() <= Constants.POWERUP_SPAWN_PERCENT / 100.0f)
                     screen.spawnRandomPowerup(block.position);
